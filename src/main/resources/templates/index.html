@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Products</title>
+    <script src="/js/script.js"></script>
+    <link rel="stylesheet" style="text/css" href="/css/styles.css">
+</head>
+<body style="background-color: LightBlue">
+<h1 style="background-color: DarkSeaGreen; position: relative; top:-22px; left: 770px; height: 50px; width: 1000px;" align="center">List of products</h1>
+<div>
+    <table id="list-products" style="border-color: steelBlue; background-color: LightSteelBlue;" align="center" border="2">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>price</th>
+            <th>category</th>
+            <th>description</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:utext="${product.id}"></td>
+            <td th:utext="${product.name}"></td>
+            <td th:utext="${product.price}"></td>
+            <td th:utext="${product.category}"></td>
+            <td th:utext="${product.description}"></td>
+        </tr>
+    </table>
+    <button id="add" style="background-color: DarkSeaGreen;" onclick="displayFormAdd()">Add product</button>
+    <button id="update" style="background-color: DarkSeaGreen;" onclick="displayFormUpdateId()">Update product</button>
+    <button id="get" style="background-color: DarkSeaGreen;" onclick="displayFormGetId()">Get product</button>
+    <form action="http://localhost:8080/products/" method="get">
+        <input id="getAll" style="background-color: DarkSeaGreen;" onclick="displayFormGetAll()" type="submit" value="Get All products">
+    </form>
+    <button id="delete" style="background-color: DarkSeaGreen;" onclick="displayFormDeleteId()">Delete product</button>
+    <form action="http://localhost:8080/products/" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <input id="deleteAll" style="background-color: DarkSeaGreen;" onclick="displayFormDeleteAll()" type="submit" value="Delete All products">
+    </form>
+
+    <form id ="form1" method="post" action="http://localhost:8080/products/">
+        <p><a>Id</a><input style="width:220px"type="text" name="id"/></p>
+        <p><a>Name</a><input style="width:195px"type="text" name="name"></p>
+        <p><a>Price</a><input style="width:200px" type="text" name="price"></p>
+        <p><a>Category</a><input style="width:175px" type="text" name="category"><p>
+        <p><a>Description</a><input type="text" name="name"><p>
+        <input style="width:250px" type="submit" value="Send" />
+    </form>
+
+    <form id ="form2"  method="post" action="http://localhost:8080/products/">
+        <input type="hidden" name="_method" value="put"/>
+        <p><a>Id</a><input id = "id-update" style="width:220px"type="text" name="id"/></p>
+        <p><a>Name</a><input style="width:195px"type="text" name="name"></p>
+        <p><a>Price</a><input style="width:200px" type="text" name="price"></p>
+        <p><a>Category</a><input style="width:175px" type="text" name="category"></p>
+        <p><a>Description</a><input type="text" name="name"></p>
+        <p><input style="width:250px" onclick="displayFormUpdate()" type="submit" value="Send"/></p>
+    </form>
+
+    <form id ="getId" method="get" action="http://localhost:8080/products/">
+        <a>Input id</a>
+        <input id="id-get" type="text" name="id" style="width:180px">
+        <p><input id="submit-get-id" onclick="displayFormGet()" type="submit" value="Send" style="width:250px"></p>
+    </form>
+
+    <form id ="deleteId" method="post" action="http://localhost:8080/products/">
+        <input type="hidden" name="_method" value="delete"/>
+        <a>Input id</a>
+        <input id="id-delete" type="text" name="id" style="width:180px">
+        <p><input id="submit-delete-id" onclick="displayFormDelete()" type="submit" value="Send" style="width:250px"></p>
+    </form>
+</div>
+</body>
+</html>
