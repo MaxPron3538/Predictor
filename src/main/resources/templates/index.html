@@ -6,10 +6,10 @@
     <script type="text/javascript" src="/js/script.js"></script>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body background="https://wallpapers.com/images/hd/5k-firewatch-deer-aesthetic-0bt8rqtpbep0bwl9.jpg">
-<div style="width: 100%; height: 50px; position: relative; top: -20px; background-color: DarkSlateGray; color: white;"  text align="center">
-    <h1>CRUD Application</h1>
-    <button id="select"  style="position: relative; margin-left: 1800px; top: -65px"></button>
+<body background="https://wallpapers.com/images/hd/5k-firewatch-deer-aesthetic-0bt8rqtpbep0bwl9.jpg" style="background-size: cover; background-repeat: no-repeat">
+<div style="width: 100%; height: 50px; position: relative; top: -22px; background-color: #36373d; color: white;">
+    <h1 text align="center">CRUD Application</h1>
+    <button id="select" style="position: relative; left: 97%; top: -65px"></button>
 </div>
 <p>
 <div>
@@ -21,56 +21,48 @@
             <th>Category</th>
             <th>Description</th>
         </tr>
-        <tr th:each="product : ${products}">
-            <td th:utext="${product.id}"></td>
-            <td th:utext="${product.name}"></td>
-            <td th:utext="${product.price}"></td>
-            <td th:utext="${product.category}"></td>
-            <td th:utext="${product.description}"></td>
-        </tr>
     </table>
     <div align="center">
-        <p><button id="add" class="button button1" style="width: 1000px; height: 50px;" onclick="displayFormAdd()">Add product</button>
-        <p><button id="update" class="button button1" style="width: 1000px; height: 50px;" onclick="displayFormUpdateId()">Update product</button>
-        <p><button id="get" class="button button1" style="width: 1000px; height: 50px;" onclick="displayFormGetId()">Get product</button>
+        <p><button id="add" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormAdd()">Add product</button>
+        <p><button id="update" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormUpdateId()">Update product</button>
+        <p><button id="get" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormGetId()">Get product</button>
         <p><form action="https://soring-boot-app-of-maxpron.herokuapp.com/products/" method="get">
-        <input id="getAll" class="button button1" style="width: 1000px; height: 50px;" onclick="displayFormGetAll()" type="submit" value="Get All products">
+        <input id="getAll" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormGetAll()" type="submit" value="Get All products">
     </form>
-        <p><button id="delete" class="button button1" style="width: 1000px; height: 50px;" onclick="displayFormDeleteId()">Delete product</button>
+        <p><button id="delete" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteId()">Delete product</button>
         <p><form action="https://soring-boot-app-of-maxpron.herokuapp.com/products/" method="post">
         <input type="hidden" name="_method" value="delete"/>
-        <input id="deleteAll" class="button button1" style="width: 1000px; height: 50px;" onclick="displayFormDeleteAll()" type="submit" value="Delete All products">
+        <input id="deleteAll" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteAll()" type="submit" value="Delete All products">
     </form>
     </div>
 
-    <form id ="form1" style="visibility: hidden; margin-top: -420px; margin-left: 100px;" method="post" action="https://soring-boot-app-of-maxpron.herokuapp.com/products/">
-        <input class="text-field__input" type="text" name="Id" id="id-product-add" placeholder="Id">
-        <input class="text-field__input" type="text" name="Name" id="name-product-add" placeholder="Name">
-        <input class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
-        <input class="text-field__input" type="text" name="Type" id="type-product-add" placeholder="Type">
-        <input class="text-field__input" type="text" name="Description" id="description-product-add" placeholder="Description">
-        <p>
-            <input class="input1" type="submit" value="Send" />
+    <form id ="form1" align="center" style="visibility: hidden; margin-top: -580px;" method="post" action="https://soring-boot-app-of-maxpron.herokuapp.com/products/">
+        <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-add" placeholder="Id">
+        <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Name" id="name-product-add" placeholder="Name">
+        <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
+        <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="Type" id="type-product-add" placeholder="Type">
+        <p><input style="position: relative; top: -60px" class="text-field__input" type="text" name="Description" id="description-add" placeholder="Description">
+        <p><input style="position: relative; top: -70px" class="input1" type="submit" value="Send" />
     </form>
 
-    <form id ="form2" style="visibility: hidden; margin-top: -212px; margin-left: 100px;"  method="post" action="https://soring-boot-app-of-maxpron.herokuapp.com/products/">
+    <form id ="form2" align="center" style="visibility: hidden; margin-top: -212px; margin-left: 100px;" method="post" action="https://soring-boot-app-of-maxpron.herokuapp.com/products/">
         <input type="hidden" name="_method" value="put"/>
         <input class="text-field__input" type="text" name="Id" id="id-product-update" placeholder="Id">
         <input class="text-field__input" type="text" name="Name" id="name-product-update" placeholder="Name">
         <input class="text-field__input" type="text" name="Price" id="price-product-update" placeholder="Price">
         <input class="text-field__input" type="text" name="Type" id="type-product-update" placeholder="Type">
-        <input class="text-field__input" type="text" name="Description" id="description-product-update" placeholder="Description">
+        <input class="text-field__input" type="text" name="Description" id="description-product" placeholder="Description">
         <p>
             <input class="input1" onclick="displayFormUpdate()" type="submit" value="Send" />
     </form>
 
-    <form id ="getId" style="visibility: hidden; margin-top: -200px; margin-left: 100px;" method="get" action="https://soring-boot-app-of-maxpron.herokuapp.com/products/">
+    <form id ="getId" align="center" style="visibility: hidden; margin-top: 200px;" method="get" action="https://soring-boot-app-of-maxpron.herokuapp.com/products/">
         <input class="text-field__input" type="text" name="Id" id="id-product-get" placeholder="Id">
         <p>
             <input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
     </form>
 
-    <form id ="deleteId" style="visibility: hidden; margin-top: -92px; margin-left: 100px;" method="post" action="https://soring-boot-app-of-maxpron.herokuapp.com/products/">
+    <form id ="deleteId" align="center" style="visibility: hidden; margin-top: -92px; margin-left: 100px;" method="post" action="https://soring-boot-app-of-maxpron.herokuapp.com/products/">
         <input type="hidden" name="_method" value="delete"/>
         <input class="text-field__input" type="text" name="Id" id="id-product-delete" placeholder="Id">
         <p>

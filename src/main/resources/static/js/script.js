@@ -3,6 +3,19 @@ function displayFormAdd(){
    document.getElementById("deleteId").style.visibility = "hidden";
    document.getElementById("form2").style.visibility = "hidden";
    document.getElementById("form1").style.visibility = "visible";
+
+    var button;
+    var form1;
+    var count = 0;
+
+    function move2left(){
+       if(count < window.screen.height*0.2){
+         button = document.getElementById('update');
+         button.style.marginTop = count+"px";
+         count+=30;
+       }
+    }
+    setInterval(move2left,10);
 }
 
 function displayFormUpdateId(){
