@@ -1,6 +1,7 @@
 package main;
 
 import main.model.Product;
+
 import main.model.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,4 +61,6 @@ public class ProductsController {
         repository.deleteAll();
         return "index";
     }
+
 }
+

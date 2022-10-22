@@ -1,7 +1,9 @@
 package main;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
@@ -14,9 +16,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @SpringBootApplication
-
 public class Main {
-
     @Bean
     HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter();

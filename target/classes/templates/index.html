@@ -3,71 +3,79 @@
 <head>
     <meta charset="utf-8">
     <title>Products</title>
-    <script src="/js/script.js"></script>
-    <link rel="stylesheet" style="text/css" href="/css/styles.css">
+    <script type="text/javascript" src="/js/script.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body style="background-color: LightBlue">
-<h1 style="background-color: DarkSeaGreen; position: relative; top:-22px; left: 770px; height: 50px; width: 1000px;" align="center">List of products</h1>
-<div style="border-color: Dark" border="1">
-    <table id="list-products" style="border-color: steelBlue; background-color: LightSteelBlue;" align="center" border="2">
+<body background="https://wallpapers.com/images/hd/5k-firewatch-deer-aesthetic-0bt8rqtpbep0bwl9.jpg" style="background-size: cover; background-repeat: no-repeat">
+<div style="width: 100%; height: 50px; position: relative; top: -22px; background-color: #36373d; color: white;">
+    <h1 text align="center">CRUD Application</h1>
+    <div style="width: 100%; height: 5px; position: relative; top: -22px; background-color: white;"></div>
+    <button id="select" style="position: relative; left: 97%; top: -75px"></button>
+</div>
+<p>
+<div>
+    <table id="list-products" style="width: 1000px; height: 50px; border-color: steelBlue; background-color: LightSteelBlue; border-radius: 5px;" align="center" border="2">
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>price</th>
-            <th>category</th>
-            <th>description</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Description</th>
         </tr>
         <tr th:each="product : ${products}">
-            <td th:utext="${product.id}"></td>
-            <td th:utext="${product.name}"></td>
-            <td th:utext="${product.price}"></td>
-            <td th:utext="${product.category}"></td>
-            <td th:utext="${product.description}"></td>
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.category}"></td>
+            <td th:text="${product.description}"></td>
         </tr>
     </table>
-    <button id="add" style="background-color: DarkSeaGreen;" onclick="displayFormAdd()">Add product</button>
-    <button id="update" style="background-color: DarkSeaGreen;" onclick="displayFormUpdateId()">Update product</button>
-    <button id="get" style="background-color: DarkSeaGreen;" onclick="displayFormGetId()">Get product</button>
-    <form action="http://localhost:8080/products/" method="get">
-        <input id="getAll" style="background-color: DarkSeaGreen;" onclick="displayFormGetAll()" type="submit" value="Get All products">
+    <div align="center">
+        <p><button id="add" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormAdd()">Add product</button>
+        <p><button id="update" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormUpdateId()">Update product</button>
+        <p><button id="get" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormGetId()">Get product</button>
+        <p><form action="http://localhost:8080/products/" method="get">
+        <input id="getAll" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormGetAll()" type="submit" value="Get All products">
     </form>
-    <button id="delete" style="background-color: DarkSeaGreen;" onclick="displayFormDeleteId()">Delete product</button>
-    <form action="http://localhost:8080/products/" method="post">
+        <p><button id="delete" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteId()">Delete product</button>
+        <p><form action="http://localhost:8080/products/" method="post">
         <input type="hidden" name="_method" value="delete"/>
-        <input id="deleteAll" style="background-color: DarkSeaGreen;" onclick="displayFormDeleteAll()" type="submit" value="Delete All products">
+        <input id="deleteAll" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteAll()" type="submit" value="Delete All products">
+    </form>
+    </div>
+    <div align="center">
+    <form id ="form1"  style="visibility: hidden; margin-top: -570px;" method="post" action="http://localhost:8080/products/">
+        <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-add" placeholder="Id">
+        <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Name" id="name-product-add" placeholder="Name">
+        <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
+        <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="Category" id="category-product-add" placeholder="Category">
+        <p><input style="position: relative; top: -60px" class="text-field__input" type="text" name="Description" id="description-add" placeholder="Description">
+        <p><input style="position: relative; top: -70px" class="input1" type="submit" value="Send" />
     </form>
 
-    <form id ="form1" method="post" action="http://localhost:8080/products/">
-        <p><a>Id</a><input style="width:220px"type="text" name="id"/></p>
-        <p><a>Name</a><input style="width:195px"type="text" name="name"></p>
-        <p><a>Price</a><input style="width:200px" type="text" name="price"></p>
-        <p><a>Category</a><input style="width:175px" type="text" name="category"><p>
-        <p><a>Description</a><input type="text" name="name"><p>
-        <input style="width:250px" type="submit" value="Send" />
-    </form>
-
-    <form id ="form2"  method="post" action="http://localhost:8080/products/">
+    <form id ="form2" style="visibility: hidden; margin-top: -200px;" method="post" action="http://localhost:8080/products/">
         <input type="hidden" name="_method" value="put"/>
-        <p><a>Id</a><input id = "id-update" style="width:220px"type="text" name="id"/></p>
-        <p><a>Name</a><input style="width:195px"type="text" name="name"></p>
-        <p><a>Price</a><input style="width:200px" type="text" name="price"></p>
-        <p><a>Category</a><input style="width:175px" type="text" name="category"></p>
-        <p><a>Description</a><input type="text" name="name"></p>
-        <p><input style="width:250px" onclick="displayFormUpdate()" type="submit" value="Send"/></p>
+        <input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-update" placeholder="Id">
+        <input style="position: relative; top: 1px" class="text-field__input" type="text" name="Name" id="name-product-update" placeholder="Name">
+        <input style="position: relative; top: 2px" class="text-field__input" type="text" name="Price" id="price-product-update" placeholder="Price">
+        <input style="position: relative; top: 2px" class="text-field__input" type="text" name="Category" id="category-product-update" placeholder="Category">
+        <input style="position: relative; top: 4px" class="text-field__input" type="text" name="Description" id="description-product" placeholder="Description">
+        <p><input style="position: relative; top: -6px" class="input1" onclick="displayFormUpdate()" type="submit" value="Send" />
     </form>
 
-    <form id ="getId" method="get" action="http://localhost:8080/products/">
-        <a>Input id</a>
-        <input id="id-get" type="text" name="id" style="width:180px">
-        <p><input id="submit-get-id" onclick="displayFormGet()" type="submit" value="Send" style="width:250px"></p>
+    <form id ="getId" style="visibility: hidden; margin-top: -40px;" method="get" action="http://localhost:8080/products/">
+        <input class="text-field__input" type="text" name="Id" id="id-product-get" placeholder="Id">
+        <p>
+            <input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
     </form>
 
-    <form id ="deleteId" method="post" action="http://localhost:8080/products/">
+    <form id ="deleteId" style="visibility: hidden; margin-top: 80px;" method="post" action="http://localhost:8080/products/">
         <input type="hidden" name="_method" value="delete"/>
-        <a>Input id</a>
-        <input id="id-delete" type="text" name="id" style="width:180px">
-        <p><input id="submit-delete-id" onclick="displayFormDelete()" type="submit" value="Send" style="width:250px"></p>
+        <input class="text-field__input" type="text" name="Id" id="id-product-delete" placeholder="Id">
+        <p>
+            <input id="submit-delete-id" class="input1" onclick="displayFormDelete()" type="submit" value="Send"></p>
     </form>
+    </div>
 </div>
 </body>
 </html>
