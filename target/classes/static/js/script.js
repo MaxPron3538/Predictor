@@ -1,40 +1,121 @@
 var button;
-var count = -20;
-var countTop = 220;
-var GetDeleteCount = -20;
-var GetDeleteCountTop = 120;
+var countBottomAU;
+var countTopAU;
+var countBottomGD;
+var countTopGD;
+var marginCountBottom = -20;
+var marginCountTop = 220;
+var GetDeleteMarginCountBottom = -20;
+var GetDeleteMarginCountTop = 120;
+var condition;
+var conditionGetOrDelete;
+var index;
 
-function moveBottomForGetOrDelete(message){
-    if(GetDeleteCount < 120){
-        button = document.getElementById(message);
-        button.style.marginTop = GetDeleteCount+"px";
-        GetDeleteCount+=20;
+function moveBottomButtonAU(message,condition,fullStep){
+    if(condition == true){
+        if(countBottomAU <= fullStep){
+            moveBottomAU(message);
+        }
+    }else{
+        if(countBottomAU < fullStep){
+            moveBottomAU(message);
+        }
     }
 }
 
-function moveTopForGetOrDelete(message){
-    if(GetDeleteCountTop >= 0){
-        button = document.getElementById(message);
-        button.style.marginTop = GetDeleteCountTop+"px";
-        GetDeleteCountTop-=20;
+function moveTopButtonAU(message,condition,fullStep){
+    if(condition == true){
+        if(countTopAU > fullStep){
+            moveTopAU(message);
+        }
+    }else{
+        if(countTopAU >= fullStep){
+            moveTopAU(message);
+        }
     }
 }
 
-function moveBottom(message){
-    if(count < 220){
-        button = document.getElementById(message);
-        button.style.marginTop = count+"px";
-        count+=20;
+function moveBottomButtonGD(message,condition,fullStep){
+    if(condition == true){
+        if(countBottomGD <= fullStep){
+            moveBottomGD(message);
+        }
+    }else{
+        if(countBottomGD < fullStep){
+            moveBottomGD(message);
+        }
     }
 }
 
-function moveTop(message){
-    if(countTop > -20){
-        button = document.getElementById(message);
-        button.style.marginTop = countTop+"px";
-        countTop-=20;
+function moveTopButtonGD(message,condition,fullStep){
+    if(condition == true){
+        if(countTopGD > fullStep){
+            moveTopGD(message);
+        }
+    }else{
+        if(countTopGD >= fullStep){
+            moveTopGD(message);
+        }
     }
 }
+
+function moveBottomAU(message){
+    button = document.getElementById(message);
+    button.style.top = countBottomAU+"px";
+    countBottomAU+=20;
+}
+
+function moveTopAU(message){
+    button = document.getElementById(message);
+    button.style.top = countTopAU+"px";
+    countTopAU-=20;
+}
+
+function moveBottomGD(message){
+    button = document.getElementById(message);
+    button.style.top = countBottomGD+"px";
+    countBottomGD+=20;
+}
+
+function moveTopGD(message){
+    button = document.getElementById(message);
+    button.style.top = countTopGD+"px";
+    countTopGD-=20;
+}
+
+function moveMarginTop(message){
+    if(marginCountTop > -20){
+        button = document.getElementById(message);
+        button.style.marginTop = marginCountTop+"px";
+        marginCountTop-=20;
+    }
+}
+
+function moveMarginBottom(message){
+    if(marginCountBottom < 220){
+        button = document.getElementById(message);
+        button.style.marginTop = marginCountBottom+"px";
+        marginCountBottom+=20;
+    }
+}
+
+
+function moveMarginBottomForGetOrDelete(message){
+    if(GetDeleteMarginCountBottom < 120){
+        button = document.getElementById(message);
+        button.style.marginTop = GetDeleteMarginCountBottom+"px";
+        GetDeleteMarginCountBottom+=20;
+    }
+}
+
+function moveMarginTopForGetOrDelete(message){
+    if(GetDeleteMarginCountTop >= 0){
+        button = document.getElementById(message);
+        button.style.marginTop = GetDeleteMarginCountTop+"px";
+        GetDeleteMarginCountTop-=20;
+    }
+}
+
 
 function displayFormAdd(){
     document.getElementById("getId").style.visibility = "hidden";
@@ -42,19 +123,46 @@ function displayFormAdd(){
     document.getElementById("form2").style.visibility = "hidden";
     document.getElementById("form1").style.visibility = "visible";
 
-    if(count == -20){
-        countTop = -20;
+    if(GetDeleteMarginCountBottom != -20){
+        if(marginCountBottom != -20){
+            if(condition == true){
+                if(index != true){
+                    marginCountBottom = -20;
+                    setInterval(moveMarginBottom,10,'update');
+                }
+            }
+        }
+        GetDeleteMarginCountTop = 120;
+
+        if(conditionGetOrDelete == true){
+            if(countTopGD == - 120){
+                countBottomGD = -120;
+                setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+            }
+            setInterval(moveMarginTopForGetOrDelete,10,'delete');
+        }else{
+            if(countBottomGD == 120){
+                countTopGD = 120;
+                setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+            }
+            setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+        }
+        index = true;
+    }
+    if(marginCountBottom != -20){
+        if(condition == true){
+           countBottomAU = -220;
+           setInterval(moveBottomButtonAU,10,'update',condition,0);
+        }
+        else{
+           countBottomAU = 0;
+           marginCountBottom = -20;
+           setInterval(moveBottomButtonAU,10,'update',condition,220);
+        }
     }else{
-        countTop = 220;
-        count = -20;
+        condition = true;
+        setInterval(moveMarginBottom,10,'update');
     }
-    if(GetDeleteCount != -20){
-       GetDeleteCountTop = 120;
-       setInterval(moveTopForGetOrDelete,10,'getAll');
-       setInterval(moveTopForGetOrDelete,10,'deleteAll');
-    }
-    setInterval(moveTop,10,'get');
-    setInterval(moveBottom,10,'update');
 }
 
 function displayFormUpdateId(){
@@ -63,28 +171,47 @@ function displayFormUpdateId(){
     document.getElementById("deleteId").style.visibility = "hidden";
     document.getElementById("form2").style.visibility = "visible";
 
+    if(GetDeleteMarginCountBottom != -20){
+        if(marginCountBottom != -20){
+            if(condition == false){
+                if(index != true){
+                    marginCountBottom = -20;
+                    setInterval(moveMarginBottom,10,'get');
+                }
+            }
+        }
+        GetDeleteMarginCountTop = 120;
 
-    //GetDeleteCountTop = 120;
-    //setInterval(moveTopForGetOrDelete,10,'get');
-
-    if(count == -20){
-        countTop = -20;
-    }else{
-        countTop = 220;
-        count = -20;
+        if(conditionGetOrDelete == true){
+            if(countTopGD == - 120){
+                countBottomGD = -120;
+                setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+            }
+            setInterval(moveMarginTopForGetOrDelete,10,'delete');
+        }else{
+            if(countBottomGD == 120){
+                countTopGD = 120;
+                setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+            }
+            setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+        }
+        index = true;
     }
-    if(GetDeleteCount != -20){
-       GetDeleteCountTop = 120;
-       setInterval(moveTopForGetOrDelete,10,'getAll');
-       setInterval(moveTopForGetOrDelete,10,'deleteAll');
+    if(marginCountBottom != -20){
+        if(condition == true){
+            countTopAU = 0;
+            marginCountBottom = -20;
+            setInterval(moveTopButtonAU,10,'update',condition,-220);
+        }
+        else{
+            countTopAU = 220;
+            setInterval(moveTopButtonAU,10,'update',condition,0);
+        }
     }
-    setInterval(moveTop,10,'update');
-    setInterval(moveBottom,10,'get');
-}
-
-function displayFormUpdate(){
-    var id = document.getElementById("id-update").value;
-    document.getElementById("form2").action+=id;
+    else{
+        condition = false;
+        setInterval(moveMarginBottom,10,'get');
+    }
 }
 
 function displayFormGetId(){
@@ -93,24 +220,47 @@ function displayFormGetId(){
     document.getElementById("deleteId").style.visibility = "hidden";
     document.getElementById("getId").style.visibility = "visible";
 
-    if(GetDeleteCount == -20){
-        GetDeleteCountTop = -20;
-    }else{
-        GetDeleteCountTop = 120;
-        GetDeleteCount = -20;
-    }
+    if(marginCountBottom != -20){
+        if(GetDeleteMarginCountBottom != -20){
+            if(conditionGetOrDelete == true){
+                if(index != false){
+                   GetDeleteMarginCountBottom = -20;
+                   setInterval(moveMarginBottomForGetOrDelete,10,'delete');
+                }
+            }
+        }
+        marginCountTop = 220;
 
-    if(count != -20){
-        countTop = 220;
-        setInterval(moveTop,10,'update');
+        if(condition == true){
+            if(countTopAU == -220){
+               countBottomAU = -220;
+               setInterval(moveBottomButtonAU,10,'update',condition,0);
+            }
+            setInterval(moveMarginTop,10,'update');
+        }else{
+            if(countBottomAU == 220){
+               countTopAU = 220;
+               setInterval(moveTopButtonAU,10,'update',condition,0);
+            }
+            setInterval(moveMarginTop,10,'get');
+        }
+        index = false;
     }
-    setInterval(moveBottomForGetOrDelete,10,'getAll');
-    setInterval(moveTopForGetOrDelete,10,'deleteAll');
-}
-
-function displayFormGet(){
-   var id = document.getElementById("id-get").value;
-   document.getElementById("getId").action+=id;
+    if(GetDeleteMarginCountBottom != -20){
+        if(conditionGetOrDelete == true){
+           countBottomGD = -120;
+           setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+        }
+        else{
+           countBottomGD = 0;
+           GetDeleteMarginCountBottom = -20;
+           setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,120);
+        }
+    }
+    else{
+        conditionGetOrDelete = true;
+        setInterval(moveMarginBottomForGetOrDelete,10,'delete');
+    }
 }
 
 function displayFormDeleteId(){
@@ -119,22 +269,54 @@ function displayFormDeleteId(){
     document.getElementById("getId").style.visibility = "hidden";
     document.getElementById("deleteId").style.visibility = "visible";
 
-    if(GetDeleteCount == -20){
-        GetDeleteCountTop = -20;
+    if(marginCountBottom != -20){
+        if(GetDeleteMarginCountBottom != -20){
+            if(conditionGetOrDelete == false){
+                if(index != false){
+                   GetDeleteMarginCountBottom = -20;
+                   setInterval(moveMarginBottomForGetOrDelete,10,'getAll');
+                }
+            }
+        }
+        marginCountTop = 220;
+
+        if(condition == true){
+            if(countTopAU == -220){
+               countBottomAU = -220;
+               setInterval(moveBottomButtonAU,10,'update',condition,0);
+            }
+            setInterval(moveMarginTop,10,'update');
+        }else{
+            if(countBottomAU == 220){
+               countTopAU = 120;
+               setInterval(moveTopButtonAU,10,'update',condition,0);
+            }
+            setInterval(moveMarginTop,10,'get');
+        }
+        index = false;
+    }
+    if(GetDeleteMarginCountBottom != -20){
+
+        if(conditionGetOrDelete == true){
+           countTopGD = 0;
+           GetDeleteMarginCountBottom = -20;
+           setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,-120);
+        }
+        else{
+           countTopGD = 120;
+           setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+        }
     }else{
-        GetDeleteCountTop = 120;
-        GetDeleteCount = -20;
+        conditionGetOrDelete = false;
+        setInterval(moveMarginBottomForGetOrDelete,10,'getAll');
     }
-
-    if(count != -20){
-        countTop = 220;
-        setInterval(moveTop,10,'update');
-    }
-    setInterval(moveTopForGetOrDelete,10,'getAll');
-    setInterval(moveBottomForGetOrDelete,10,'deleteAll');
 }
 
+function displayFormGet(){
+    var id = document.getElementById("id-product-get").value;
+    document.getElementById("getId").action+=id;
+}
 function displayFormDelete(){
-   var id =  document.getElementById("id-delete").value;
+   var id = document.getElementById("id-product-delete").value;
    document.getElementById("deleteId").action+=id;
-}
+  }

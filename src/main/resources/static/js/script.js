@@ -214,11 +214,6 @@ function displayFormUpdateId(){
     }
 }
 
-function displayFormUpdate(){
-    var id = document.getElementById("id-update").value;
-    document.getElementById("form2").action+=id;
-}
-
 function displayFormGetId(){
     document.getElementById("form1").style.visibility = "hidden";
     document.getElementById("form2").style.visibility = "hidden";
@@ -268,11 +263,6 @@ function displayFormGetId(){
     }
 }
 
-function displayFormGet(){
-   var id = document.getElementById("id-get").value;
-   document.getElementById("getId").action+=id;
-}
-
 function displayFormDeleteId(){
     document.getElementById("form1").style.visibility = "hidden";
     document.getElementById("form2").style.visibility = "hidden";
@@ -320,10 +310,13 @@ function displayFormDeleteId(){
         conditionGetOrDelete = false;
         setInterval(moveMarginBottomForGetOrDelete,10,'getAll');
     }
-
 }
 
+function displayFormGet(){
+    var id = document.getElementById("id-product-get").value;
+    document.getElementById("getId").action+=id;
+}
 function displayFormDelete(){
-   var id =  document.getElementById("id-delete").value;
+   var id = document.getElementById("id-product-delete").value;
    document.getElementById("deleteId").action+=id;
-}
+  }

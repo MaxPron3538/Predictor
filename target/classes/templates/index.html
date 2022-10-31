@@ -10,7 +10,7 @@
 <div style="width: 100%; height: 50px; position: relative; top: -22px; background-color: #36373d; color: white;">
     <h1 text align="center">CRUD Application</h1>
     <div style="width: 100%; height: 5px; position: relative; top: -22px; background-color: white;"></div>
-    <button id="select" style="position: relative; left: 97%; top: -75px"></button>
+    <button id="select" style="position: relative; left: 97.5%; top: -75px"></button>
 </div>
 <p>
 <div>
@@ -34,47 +34,45 @@
         <p><button id="add" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormAdd()">Add product</button>
         <p><button id="update" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormUpdateId()">Update product</button>
         <p><button id="get" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormGetId()">Get product</button>
-        <p><form action="http://localhost:8080/products/" method="get">
+        <p><button id="delete" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteId()">Delete product</button>
+        <p><form action="https://spring-boot-crud-operations.herokuapp.com/products/" method="get">
         <input id="getAll" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormGetAll()" type="submit" value="Get All products">
     </form>
-        <p><button id="delete" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteId()">Delete product</button>
-        <p><form action="http://localhost:8080/products/" method="post">
+        <p><form action="https://spring-boot-crud-operations.herokuapp.com/products/" method="post">
         <input type="hidden" name="_method" value="delete"/>
         <input id="deleteAll" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteAll()" type="submit" value="Delete All products">
     </form>
     </div>
+
     <div align="center">
-    <form id ="form1"  style="visibility: hidden; margin-top: -570px;" method="post" action="http://localhost:8080/products/">
-        <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-add" placeholder="Id">
-        <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Name" id="name-product-add" placeholder="Name">
-        <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
-        <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="Category" id="category-product-add" placeholder="Category">
-        <p><input style="position: relative; top: -60px" class="text-field__input" type="text" name="Description" id="description-add" placeholder="Description">
-        <p><input style="position: relative; top: -70px" class="input1" type="submit" value="Send" />
-    </form>
+        <form id ="form1" style="visibility: hidden; margin-top: -570px;" method="post" action="https://spring-boot-crud-operations.herokuapp.com/products/">
+            <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-add" placeholder="Id">
+            <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Name" id="name-product-add" placeholder="Name">
+            <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
+            <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="Category" id="category-product-add" placeholder="Category">
+            <p><input style="position: relative; top: -60px" class="text-field__input" type="text" name="Description" id="description-product-add" placeholder="Description">
+            <p><input style="position: relative; top: -70px" class="input1" type="submit" value="Send" />
+        </form>
 
-    <form id ="form2" style="visibility: hidden; margin-top: -200px;" method="post" action="http://localhost:8080/products/">
-        <input type="hidden" name="_method" value="put"/>
-        <input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-update" placeholder="Id">
-        <input style="position: relative; top: 1px" class="text-field__input" type="text" name="Name" id="name-product-update" placeholder="Name">
-        <input style="position: relative; top: 2px" class="text-field__input" type="text" name="Price" id="price-product-update" placeholder="Price">
-        <input style="position: relative; top: 2px" class="text-field__input" type="text" name="Category" id="category-product-update" placeholder="Category">
-        <input style="position: relative; top: 4px" class="text-field__input" type="text" name="Description" id="description-product" placeholder="Description">
-        <p><input style="position: relative; top: -6px" class="input1" onclick="displayFormUpdate()" type="submit" value="Send" />
-    </form>
+        <form id ="form2" style="visibility: hidden; margin-top: -200px;" method="post" action="https://spring-boot-crud-operations.herokuapp.com/products/">
+            <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-update" placeholder="Id">
+            <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Name" id="name-product-update" placeholder="Name">
+            <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Price" id="price-product-update" placeholder="Price">
+            <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="Category" id="category-product-update" placeholder="Category">
+            <p><input style="position: relative; top: -60px" class="text-field__input" type="text" name="Description" id="description-product-update" placeholder="Description">
+            <p><input style="position: relative; top: -70px" class="input1" type="submit" value="Send" />
+        </form>
 
-    <form id ="getId" style="visibility: hidden; margin-top: -40px;" method="get" action="http://localhost:8080/products/">
-        <input class="text-field__input" type="text" name="Id" id="id-product-get" placeholder="Id">
-        <p>
-            <input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
-    </form>
+        <form id ="getId" style="visibility: hidden; margin-top: -100px;" method="get" action="https://spring-boot-crud-operations.herokuapp.com/products/">
+            <input class="text-field__input" type="text" name="Id" id="id-product-get" placeholder="Id">
+            <p><input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
+        </form>
 
-    <form id ="deleteId" style="visibility: hidden; margin-top: 80px;" method="post" action="http://localhost:8080/products/">
-        <input type="hidden" name="_method" value="delete"/>
-        <input class="text-field__input" type="text" name="Id" id="id-product-delete" placeholder="Id">
-        <p>
-            <input id="submit-delete-id" class="input1" onclick="displayFormDelete()" type="submit" value="Send"></p>
-    </form>
+        <form id ="deleteId" style="visibility: hidden; margin-top: -20px;" method="post" action="https://spring-boot-crud-operations.herokuapp.com/products/">
+            <input type="hidden" name="_method" value="delete"/>
+            <input class="text-field__input" type="text" name="Id" id="id-product-delete" placeholder="Id">
+            <p><input id="submit-delete-id" class="input1" onclick="displayFormDelete()" type="submit" value="Send"></p>
+        </form>
     </div>
 </div>
 </body>

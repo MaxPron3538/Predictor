@@ -17,7 +17,6 @@
 }
 
 .text-field__input {
-  display: block;
   width: 200px;
   height: calc(1.75rem + 2px);
   padding: 0.375rem 0.75rem;
