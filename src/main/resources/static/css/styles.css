@@ -5,6 +5,12 @@
 }
 
  body {
+  background: url(https://wallpapers.com/images/hd/5k-firewatch-deer-aesthetic-0bt8rqtpbep0bwl9.jpg) no-repeat;
+      -moz-background-size: 100%; /* Firefox 3.6+ */
+      -webkit-background-size: 100%; /* Safari 3.1+ è Chrome 4.0+ */
+      -o-background-size: 100%; /* Opera 9.6+ */
+      background-size: 100%;
+
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
