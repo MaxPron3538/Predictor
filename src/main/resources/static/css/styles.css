@@ -124,13 +124,12 @@
 }
 
 
-/*@media (min-width: 300px) and (max-width: 1100px) {*/
+@media (min-width: 300px) and (max-width: 1100px) {*/
     body {
       background: url(https://wallpapers.com/images/hd/5k-firewatch-deer-aesthetic-0bt8rqtpbep0bwl9.jpg) no-repeat;
-      /*background-position: center;*/
+      background-position: center;
       background-size: cover;
-     /* width: 980px;
-      */
+      width: 980px;
       height: 1200px;
 
 
@@ -144,4 +143,4 @@
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
-/*}*/
+}
