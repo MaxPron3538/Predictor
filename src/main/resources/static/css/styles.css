@@ -1,7 +1,7 @@
-@media (min-width: 1920px){
-background-size: cover
-
-}
+@media (max-width: 767px) { ... }
+@media (min-width: 768px) and (max-width: 991px) { ... }
+@media (min-width: 991px) and (max-width: 1199px) { ... }
+@media (min-width: 1200px) { background-size: cover;}
 *,
 *::before,
 *::after {
