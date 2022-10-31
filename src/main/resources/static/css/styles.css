@@ -1,4 +1,4 @@
-@media (min-width: 1200px) and (max-width: 2800) {
+@media screen and (min-width: 1200px) {
   background-size: cover;
 }
 *,
