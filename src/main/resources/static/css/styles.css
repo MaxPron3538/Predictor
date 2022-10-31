@@ -1,6 +1,4 @@
 @media (min-width: 1200px) {
-  background-size: cover;
-}
 *,
 *::before,
 *::after {
@@ -12,8 +10,8 @@
   -moz-background-size: 100%;
   -webkit-background-size: 100%;
   -o-background-size: 100%;
-  /*background-size: cover;
-  min-height: 1500px;
+  background-size: cover;
+  /*min-height: 1500px;
   width: 980px;
   height: 1410px;
 */
@@ -126,4 +124,5 @@
     height: 40px;
     background-image: url(https://cdn-icons-png.flaticon.com/512/59/59472.png?w=360);
     background-size : cover;
+}
 }
