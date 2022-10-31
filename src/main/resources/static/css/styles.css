@@ -11,7 +11,7 @@
   -o-background-size: 100%;
   background-size: cover;
   background-position: center;
-  height: 1410px;
+  min-height: 1410px;
  /* width: 980px;
   height: 1410px;
 */
