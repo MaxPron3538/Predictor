@@ -1,3 +1,7 @@
+@media (min-width: 1920px){
+background-size: cover
+
+}
 *,
 *::before,
 *::after {
@@ -9,8 +13,8 @@
   -moz-background-size: 100%;
   -webkit-background-size: 100%;
   -o-background-size: 100%;
-  background-size: cover;
-  /*min-height: 1500px;
+  /*background-size: cover;
+  min-height: 1500px;
   width: 980px;
   height: 1410px;
 */
