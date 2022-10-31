@@ -34,14 +34,14 @@
         <p><button id="add" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormAdd()">Add product</button>
         <p><button id="update" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormUpdateId()">Update product</button>
         <p><button id="get" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormGetId()">Get product</button>
+        <p><button id="delete" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteId()">Delete product</button>
         <p><form action="https://spring-boot-crud-operations.herokuapp.com/products/" method="get">
         <input id="getAll" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormGetAll()" type="submit" value="Get All products">
-    </form>
-        <p><button id="delete" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteId()">Delete product</button>
+        </form>
         <p><form action="https://spring-boot-crud-operations.herokuapp.com/products/" method="post">
         <input type="hidden" name="_method" value="delete"/>
         <input id="deleteAll" class="button button1" style="position: relative; width: 1000px; height: 50px; color: white;" onclick="displayFormDeleteAll()" type="submit" value="Delete All products">
-    </form>
+        </form>
     </div>
     <div align="center">
     <form id ="form1"  style="visibility: hidden; margin-top: -570px;" method="post" action="https://spring-boot-crud-operations.herokuapp.com/products/">
