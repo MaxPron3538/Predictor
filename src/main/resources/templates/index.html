@@ -65,15 +65,13 @@
 
     <form id ="getId" style="visibility: hidden; margin-top: -40px;" method="get" action="https://spring-boot-crud-operations.herokuapp.com/products/">
         <input class="text-field__input" type="text" name="Id" id="id-product-get" placeholder="Id">
-        <p>
-            <input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
+        <p><input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
     </form>
 
     <form id ="deleteId" style="visibility: hidden; margin-top: -10px;" method="post" action="https://spring-boot-crud-operations.herokuapp.com/products/">
         <input type="hidden" name="_method" value="delete"/>
         <input class="text-field__input" type="text" name="Id" id="id-product-delete" placeholder="Id">
-        <p>
-            <input id="submit-delete-id" class="input1" onclick="displayFormDelete()" type="submit" value="Send"></p>
+        <p><input id="submit-delete-id" class="input1" onclick="displayFormDelete()" type="submit" value="Send"></p>
     </form>
     </div>
 </div>
