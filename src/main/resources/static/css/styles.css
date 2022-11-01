@@ -121,7 +121,7 @@
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
-    .select{
+    #select{
         position: relative;
         left: 97.5%;
         top: -75px
@@ -146,7 +146,7 @@
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
-    .select{
+    #select{
        position: relative;
        left: 92%;
        top: -75px
