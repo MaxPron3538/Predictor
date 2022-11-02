@@ -4,71 +4,72 @@ var countTopAU;
 var countBottomGD;
 var countTopGD;
 var marginCountBottom = -20;
-var marginCountTop = 220;
 var GetDeleteMarginCountBottom = -20;
-var GetDeleteMarginCountTop = 120;
 var condition;
 var conditionGetOrDelete;
-var index;
+var pointer;
+var firstInterval;
+var secondInterval;
+var stopInterval;
 
 function moveBottomButtonAU(message,condition,fullStep){
-    if(condition == true){
-        if(countBottomAU <= fullStep){
-            moveBottomAU(message);
-        }
-    }else{
-        if(countBottomAU < fullStep){
-            moveBottomAU(message);
-        }
-    }
+   if(condition == true){
+      if(countBottomAU <= fullStep){
+         moveBottomAU(message);
+      }
+   }else{
+      if(countBottomAU < fullStep){
+         moveBottomAU(message);
+      }
+   }
 }
 
 function moveTopButtonAU(message,condition,fullStep){
-    if(condition == true){
-        if(countTopAU > fullStep){
-            moveTopAU(message);
-        }
-    }else{
-        if(countTopAU >= fullStep){
-            moveTopAU(message);
-        }
-    }
+   if(condition == true){
+      if(countTopAU > fullStep){
+         moveTopAU(message);
+      }
+   }else{
+      if(countTopAU >= fullStep){
+         moveTopAU(message);
+      }
+   }
 }
 
 function moveBottomButtonGD(message,condition,fullStep){
-    if(condition == true){
-        if(countBottomGD <= fullStep){
-            moveBottomGD(message);
-        }
-    }else{
-        if(countBottomGD < fullStep){
-            moveBottomGD(message);
-        }
-    }
+   if(condition == true){
+      if(countBottomGD <= fullStep){
+         moveBottomGD(message);
+      }
+   }else{
+      if(countBottomGD < fullStep){
+         moveBottomGD(message);
+      }
+   }
 }
 
 function moveTopButtonGD(message,condition,fullStep){
-    if(condition == true){
-        if(countTopGD > fullStep){
-            moveTopGD(message);
-        }
-    }else{
-        if(countTopGD >= fullStep){
-            moveTopGD(message);
-        }
-    }
+   if(condition == true){
+      if(countTopGD > fullStep){
+         moveTopGD(message);
+      }
+   }else{
+      if(countTopGD >= fullStep){
+         moveTopGD(message);
+      }
+   }
 }
 
 function moveBottomAU(message){
-    button = document.getElementById(message);
-    button.style.top = countBottomAU+"px";
-    countBottomAU+=20;
+   button = document.getElementById(message);
+   button.style.top = countBottomAU+"px";
+   countBottomAU+=20;
 }
 
 function moveTopAU(message){
-    button = document.getElementById(message);
-    button.style.top = countTopAU+"px";
-    countTopAU-=20;
+   button = document.getElementById(message);
+   button.style.top = countTopAU+"px";
+   countTopAU-=20;
 }
 
 function moveBottomGD(message){
@@ -84,10 +85,10 @@ function moveTopGD(message){
 }
 
 function moveMarginTop(message){
-    if(marginCountTop > -20){
+    if(marginCountBottom > -20){
         button = document.getElementById(message);
-        button.style.marginTop = marginCountTop+"px";
-        marginCountTop-=20;
+        button.style.marginTop = marginCountBottom+"px";
+        marginCountBottom-=20;
     }
 }
 
@@ -109,60 +110,81 @@ function moveMarginBottomForGetOrDelete(message){
 }
 
 function moveMarginTopForGetOrDelete(message){
-    if(GetDeleteMarginCountTop >= 0){
+    if(GetDeleteMarginCountBottom >= 0){
         button = document.getElementById(message);
-        button.style.marginTop = GetDeleteMarginCountTop+"px";
-        GetDeleteMarginCountTop-=20;
+        button.style.marginTop = GetDeleteMarginCountBottom+"px";
+        GetDeleteMarginCountBottom-=20;
     }
 }
 
+function setHiddenForm1(){
+   document.getElementById("form1").style.visibility = "hidden";
+}
+
+function setHiddenForm2(){
+   document.getElementById("form2").style.visibility = "hidden";
+}
+
+function setHiddenGetId(){
+   document.getElementById("getId").style.visibility = "hidden";
+}
+function setHiddenDeleteId(){
+   document.getElementById("deleteId").style.visibility = "hidden";
+}
 
 function displayFormAdd(){
     document.getElementById("getId").style.visibility = "hidden";
     document.getElementById("deleteId").style.visibility = "hidden";
     document.getElementById("form2").style.visibility = "hidden";
     document.getElementById("form1").style.visibility = "visible";
+    clearInterval(stopInterval);
 
     if(GetDeleteMarginCountBottom != -20){
-        if(marginCountBottom != -20){
-            if(condition == true){
-                if(index != true){
-                    marginCountBottom = -20;
-                    setInterval(moveMarginBottom,10,'update');
-                }
-            }
-        }
-        GetDeleteMarginCountTop = 120;
+        clearInterval(secondInterval);
+
 
         if(conditionGetOrDelete == true){
             if(countTopGD == - 120){
                 countBottomGD = -120;
-                setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+                stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
             }
-            setInterval(moveMarginTopForGetOrDelete,10,'delete');
+            secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
         }else{
             if(countBottomGD == 120){
                 countTopGD = 120;
-                setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+                stopInterval = setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
             }
-            setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+            secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
         }
-        index = true;
     }
     if(marginCountBottom != -20){
-        if(condition == true){
+        if(pointer == 0){
+            marginCountBottom = 220;
+            clearInterval(firstInterval);
+
+            if(condition == false){
+               countBottomAU = -220;
+               firstInterval = setInterval(moveMarginTop,10,'get');
+               stopInterval = setInterval(moveBottomButtonAU,10,'update',true,0);
+            }else{
+               firstInterval = setInterval(moveMarginTop,10,'update');
+            }
+            setTimeout(setHiddenForm1,400);
+        }
+        else if(condition == true){
            countBottomAU = -220;
-           setInterval(moveBottomButtonAU,10,'update',condition,0);
+           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
         }
         else{
            countBottomAU = 0;
-           marginCountBottom = -20;
-           setInterval(moveBottomButtonAU,10,'update',condition,220);
+           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,220);
         }
     }else{
         condition = true;
-        setInterval(moveMarginBottom,10,'update');
+        clearInterval(firstInterval);
+        firstInterval = setInterval(moveMarginBottom,10,'update');
     }
+    pointer = 0;
 }
 
 function displayFormUpdateId(){
@@ -170,48 +192,54 @@ function displayFormUpdateId(){
     document.getElementById("getId").style.visibility = "hidden";
     document.getElementById("deleteId").style.visibility = "hidden";
     document.getElementById("form2").style.visibility = "visible";
+    clearInterval(stopInterval);
 
     if(GetDeleteMarginCountBottom != -20){
-        if(marginCountBottom != -20){
-            if(condition == false){
-                if(index != true){
-                    marginCountBottom = -20;
-                    setInterval(moveMarginBottom,10,'get');
-                }
-            }
-        }
-        GetDeleteMarginCountTop = 120;
+        clearInterval(secondInterval);
 
         if(conditionGetOrDelete == true){
             if(countTopGD == - 120){
                 countBottomGD = -120;
-                setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+                stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
             }
-            setInterval(moveMarginTopForGetOrDelete,10,'delete');
+            secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
         }else{
             if(countBottomGD == 120){
                 countTopGD = 120;
-                setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+                stopInterval = setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
             }
-            setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+            secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
         }
-        index = true;
     }
     if(marginCountBottom != -20){
-        if(condition == true){
+        if(pointer == 1){
+            marginCountBottom = 220;
+            clearInterval(firstInterval);
+
+            if(condition == true){
+               countBottomAU = -220;
+               firstInterval = setInterval(moveMarginTop,10,'update');
+               stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
+            }else{
+               firstInterval = setInterval(moveMarginTop,10,'get');
+            }
+            setTimeout(setHiddenForm2,400);
+        }
+        else if(condition == true){
             countTopAU = 0;
-            marginCountBottom = -20;
-            setInterval(moveTopButtonAU,10,'update',condition,-220);
+            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,-220);
         }
         else{
             countTopAU = 220;
-            setInterval(moveTopButtonAU,10,'update',condition,0);
+            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
         }
     }
     else{
         condition = false;
-        setInterval(moveMarginBottom,10,'get');
+        clearInterval(firstInterval);
+        firstInterval = setInterval(moveMarginBottom,10,'get');
     }
+    pointer = 1;
 }
 
 function displayFormGetId(){
@@ -219,48 +247,54 @@ function displayFormGetId(){
     document.getElementById("form2").style.visibility = "hidden";
     document.getElementById("deleteId").style.visibility = "hidden";
     document.getElementById("getId").style.visibility = "visible";
+    clearInterval(stopInterval);
 
     if(marginCountBottom != -20){
-        if(GetDeleteMarginCountBottom != -20){
-            if(conditionGetOrDelete == true){
-                if(index != false){
-                   GetDeleteMarginCountBottom = -20;
-                   setInterval(moveMarginBottomForGetOrDelete,10,'delete');
-                }
-            }
-        }
-        marginCountTop = 220;
+        clearInterval(firstInterval);
 
         if(condition == true){
             if(countTopAU == -220){
                countBottomAU = -220;
-               setInterval(moveBottomButtonAU,10,'update',condition,0);
+               stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }
-            setInterval(moveMarginTop,10,'update');
+            firstInterval = setInterval(moveMarginTop,10,'update');
         }else{
             if(countBottomAU == 220){
                countTopAU = 220;
-               setInterval(moveTopButtonAU,10,'update',condition,0);
+               stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
             }
-            setInterval(moveMarginTop,10,'get');
+            firstInterval = setInterval(moveMarginTop,10,'get');
         }
-        index = false;
     }
     if(GetDeleteMarginCountBottom != -20){
-        if(conditionGetOrDelete == true){
+        if(pointer == 2){
+            GetDeleteMarginCountBottom = 120;
+            clearInterval(secondInterval);
+
+            if(conditionGetOrDelete == false){
+               countBottomGD = -120;
+               secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+               stopInterval = setInterval(moveBottomButtonGD,10,'delete',true,0);
+            }else{
+               secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
+            }
+            setTimeout(setHiddenGetId,400);
+        }
+        else if(conditionGetOrDelete == true){
            countBottomGD = -120;
-           setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+           stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
         }
         else{
            countBottomGD = 0;
-           GetDeleteMarginCountBottom = -20;
-           setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,120);
+           stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,120);
         }
     }
     else{
         conditionGetOrDelete = true;
-        setInterval(moveMarginBottomForGetOrDelete,10,'delete');
+        clearInterval(secondInterval);
+        secondInterval = setInterval(moveMarginBottomForGetOrDelete,10,'delete');
     }
+    pointer = 2;
 }
 
 function displayFormDeleteId(){
@@ -268,55 +302,60 @@ function displayFormDeleteId(){
     document.getElementById("form2").style.visibility = "hidden";
     document.getElementById("getId").style.visibility = "hidden";
     document.getElementById("deleteId").style.visibility = "visible";
+    clearInterval(stopInterval);
 
     if(marginCountBottom != -20){
-        if(GetDeleteMarginCountBottom != -20){
-            if(conditionGetOrDelete == false){
-                if(index != false){
-                   GetDeleteMarginCountBottom = -20;
-                   setInterval(moveMarginBottomForGetOrDelete,10,'getAll');
-                }
-            }
-        }
-        marginCountTop = 220;
+        clearInterval(firstInterval);
 
         if(condition == true){
             if(countTopAU == -220){
                countBottomAU = -220;
-               setInterval(moveBottomButtonAU,10,'update',condition,0);
+               stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }
-            setInterval(moveMarginTop,10,'update');
+            firstInterval = setInterval(moveMarginTop,10,'update');
         }else{
             if(countBottomAU == 220){
                countTopAU = 120;
-               setInterval(moveTopButtonAU,10,'update',condition,0);
+               stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
             }
-            setInterval(moveMarginTop,10,'get');
+            firstInterval = setInterval(moveMarginTop,10,'get');
         }
-        index = false;
     }
     if(GetDeleteMarginCountBottom != -20){
+        if(pointer == 3){
+           GetDeleteMarginCountBottom = 120;
+            clearInterval(secondInterval);
 
-        if(conditionGetOrDelete == true){
+            if(conditionGetOrDelete == true){
+               countBottomGD = -120;
+               secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
+               stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+            }else{
+               secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+            }
+            setTimeout(setHiddenDeleteId,400);
+        }
+        else if(conditionGetOrDelete == true){
            countTopGD = 0;
-           GetDeleteMarginCountBottom = -20;
-           setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,-120);
+           stopInterval = setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,-120);
         }
         else{
            countTopGD = 120;
-           setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+           stopInterval = setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
         }
     }else{
         conditionGetOrDelete = false;
-        setInterval(moveMarginBottomForGetOrDelete,10,'getAll');
+        clearInterval(secondInterval);
+        secondInterval = setInterval(moveMarginBottomForGetOrDelete,10,'getAll');
     }
+    pointer = 3;
 }
 
 function displayFormGet(){
-    var id = document.getElementById("id-product-get").value;
-    document.getElementById("getId").action+=id;
+var id = document.getElementById("id-product-get").value;
+document.getElementById("getId").action+=id;
 }
 function displayFormDelete(){
-   var id = document.getElementById("id-product-delete").value;
-   document.getElementById("deleteId").action+=id;
-  }
+var id = document.getElementById("id-product-delete").value;
+document.getElementById("deleteId").action+=id;
+}
