@@ -169,7 +169,7 @@ function displayFormAdd(){
             }else{
                firstInterval = setInterval(moveMarginTop,10,'update');
             }
-            setTimeout(setHiddenForm1,400);
+            setTimeout(setHiddenForm1,500);
         }
         else if(condition == true){
            countBottomAU = -220;
@@ -223,7 +223,7 @@ function displayFormUpdateId(){
             }else{
                firstInterval = setInterval(moveMarginTop,10,'get');
             }
-            setTimeout(setHiddenForm2,400);
+            setTimeout(setHiddenForm2,500);
         }
         else if(condition == true){
             countTopAU = 0;
