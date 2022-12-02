@@ -12,6 +12,7 @@ var firstInterval;
 var secondInterval;
 var stopInterval;
 
+
 function moveBottomButtonAU(message,condition,fullStep){
    if(condition == true){
       if(countBottomAU <= fullStep){
