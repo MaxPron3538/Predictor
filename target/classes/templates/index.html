@@ -2,15 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Products</title>
-    <script type="text/javascript" src="/js/script.js"></script>
+    <title>Transactions</title>
     <link rel="stylesheet" href="/css/styles.css">
     <meta name="viewport" content="width=device-width, user-scalable=no">
 </head>
 <body>
-<div style="width: 100%; height: 50px; position: relative; top: -22px; background-color: #36373d; color: white;">
-    <h1 text align="center">CRUD Application</h1>
-    <div style="width: 100%; height: 5px; position: relative; top: -22px; background-color: white;"></div>
+<div style="width: 100%; height: 70px; position: relative; top: -22px; background-color: #36373d; color: white;">
+    <h1 text align="center" style="font-family: math;">PREDICTOR</h1>
+    <h3 text align="center" style="margin-top: -30px; font-family: system-ui;">Simplify your home bookkeeping</h3>
+    <div style="width: 100%; height: 5px; position: relative; top: -18px; background-color: #4CAF50;"></div>
     <button id="select"></button>
 </div>
 <p>
@@ -36,17 +36,16 @@
         <p><button id="update" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormUpdateId()">Update product</button>
         <p><button id="get" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormGetId()">Get product</button>
         <p><button id="delete" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormDeleteId()">Delete product</button>
-        <p><form action="https://analyticsofbank.onrender.com/products/" method="get">
-        <input id="getAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormGetAll()" type="submit" value="Get All products">
-    </form>
-        <p><form action="https://analyticsofbank.onrender.com/products/" method="post">
-        <input type="hidden" name="_method" value="delete"/>
-        <input id="deleteAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormDeleteAll()" type="submit" value="Delete All products">
-    </form>
+        <p><form action="http://localhost:8080/products/" method="get">
+         <input id="getAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Get All products">
+        </form>
+        <p><form action="http://localhost:8080/products/" method="post">
+         <input type="hidden" name="_method" value="delete"/>
+         <input id="deleteAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Delete All products">
+        </form>
     </div>
-
     <div align="center">
-        <form id ="form1" style="visibility: hidden; margin-top: -590px;" method="post" action="https://analyticsofbank.onrender.com/products/">
+        <form id ="form1" style="visibility: hidden; margin-top: -590px;" method="post" action="http://localhost:8080/products/">
             <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-add" placeholder="Id">
             <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Name" id="name-product-add" placeholder="Name">
             <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
@@ -55,7 +54,7 @@
             <p><input style="position: relative; top: -70px" class="input1" type="submit" value="Send" />
         </form>
 
-        <form id ="form2" style="visibility: hidden; margin-top: -200px;" method="post" action="https://analyticsofbank.onrender.com/products/">
+        <form id ="form2" style="visibility: hidden; margin-top: -200px;" method="post" action="http://localhost:8080/products/">
             <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-update" placeholder="Id">
             <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Name" id="name-product-update" placeholder="Name">
             <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Price" id="price-product-update" placeholder="Price">
@@ -64,12 +63,12 @@
             <p><input style="position: relative; top: -70px" class="input1" type="submit" value="Send" />
         </form>
 
-        <form id ="getId" style="visibility: hidden; margin-top: -90px;" method="get" action="https://analyticsofbank.onrender.com/products/">
+        <form id ="getId" style="visibility: hidden; margin-top: -90px;" method="get" action="http://localhost:8080/products/">
             <input class="text-field__input" type="text" name="Id" id="id-product-get" placeholder="Id">
             <p><input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
         </form>
 
-        <form id ="deleteId" style="visibility: hidden; margin-top: -20px;" method="post" action="https://analyticsofbank.onrender.com/products/">
+        <form id ="deleteId" style="visibility: hidden; margin-top: -20px;" method="post" action="http://localhost:8080/products/">
             <input type="hidden" name="_method" value="delete"/>
             <input class="text-field__input" type="text" name="Id" id="id-product-delete" placeholder="Id">
             <p><input id="submit-delete-id" class="input1" onclick="displayFormDelete()" type="submit" value="Send"></p>
@@ -77,4 +76,391 @@
     </div>
 </div>
 </body>
+<script>
+var opacity = 1;
+
+var button;
+var countBottomAU;
+var countTopAU;
+var countBottomGD;
+var countTopGD;
+var marginCountBottom = -20;
+var GetDeleteMarginCountBottom = -20;
+var condition;
+var conditionGetOrDelete;
+var pointer;
+var firstInterval;
+var secondInterval;
+var stopInterval;
+var intervalHide;
+
+function hideElement(elem){
+   document.getElementById(elem).style.opacity=opacity;
+   opacity=opacity-0.05;
+
+   if(opacity < 0.1){
+      document.getElementById(elem).style.visibility = "hidden";
+   }
+}
+function showElement(elem){
+   document.getElementById(elem).style.opacity=opacity;
+   opacity=opacity+0.005;
+
+   if(opacity > 0.9){
+      document.getElementById(elem).style.visibility = "visible";
+   }
+}
+
+function moveBottomButtonAU(message,condition,fullStep){
+   if(condition == true){
+      if(countBottomAU <= fullStep){
+         moveBottomAU(message);
+      }
+   }else{
+      if(countBottomAU < fullStep){
+         moveBottomAU(message);
+      }
+   }
+}
+
+function moveTopButtonAU(message,condition,fullStep){
+   if(condition == true){
+      if(countTopAU > fullStep){
+         moveTopAU(message);
+      }
+   }else{
+      if(countTopAU >= fullStep){
+         moveTopAU(message);
+      }
+   }
+}
+
+function moveBottomButtonGD(message,condition,fullStep){
+   if(condition == true){
+      if(countBottomGD <= fullStep){
+         moveBottomGD(message);
+      }
+   }else{
+      if(countBottomGD < fullStep){
+         moveBottomGD(message);
+      }
+   }
+}
+
+function moveTopButtonGD(message,condition,fullStep){
+   if(condition == true){
+      if(countTopGD > fullStep){
+         moveTopGD(message);
+      }
+   }else{
+      if(countTopGD >= fullStep){
+         moveTopGD(message);
+      }
+   }
+}
+
+function moveBottomAU(message){
+   button = document.getElementById(message);
+   button.style.top = countBottomAU+"px";
+   countBottomAU+=20;
+}
+
+function moveTopAU(message){
+   button = document.getElementById(message);
+   button.style.top = countTopAU+"px";
+   countTopAU-=20;
+}
+
+function moveBottomGD(message){
+    button = document.getElementById(message);
+    button.style.top = countBottomGD+"px";
+    countBottomGD+=20;
+}
+
+function moveTopGD(message){
+    button = document.getElementById(message);
+    button.style.top = countTopGD+"px";
+    countTopGD-=20;
+}
+
+function moveMarginTop(message){
+    if(marginCountBottom > -20){
+        button = document.getElementById(message);
+        button.style.marginTop = marginCountBottom+"px";
+        marginCountBottom-=20;
+    }
+}
+
+function moveMarginBottom(message){
+    if(marginCountBottom < 220){
+        button = document.getElementById(message);
+        button.style.marginTop = marginCountBottom+"px";
+        marginCountBottom+=20;
+    }
+}
+
+
+function moveMarginBottomForGetOrDelete(message){
+    if(GetDeleteMarginCountBottom < 120){
+        button = document.getElementById(message);
+        button.style.marginTop = GetDeleteMarginCountBottom+"px";
+        GetDeleteMarginCountBottom+=20;
+    }
+}
+
+function moveMarginTopForGetOrDelete(message){
+    if(GetDeleteMarginCountBottom >= 0){
+        button = document.getElementById(message);
+        button.style.marginTop = GetDeleteMarginCountBottom+"px";
+        GetDeleteMarginCountBottom-=20;
+    }
+}
+
+function setHiddenForm1(){
+   document.getElementById("form1").style.visibility = "hidden";
+}
+
+function setHiddenForm2(){
+   document.getElementById("form2").style.visibility = "hidden";
+}
+
+function setHiddenGetId(){
+   document.getElementById("getId").style.visibility = "hidden";
+}
+function setHiddenDeleteId(){
+   document.getElementById("deleteId").style.visibility = "hidden";
+}
+
+function displayFormAdd(){
+    document.getElementById("getId").style.visibility = "hidden";
+    document.getElementById("deleteId").style.visibility = "hidden";
+    document.getElementById("form2").style.visibility = "hidden";
+    document.getElementById("form1").style.visibility = "visible";
+    clearInterval(stopInterval);
+
+    if(GetDeleteMarginCountBottom != -20){
+        clearInterval(secondInterval);
+
+        if(conditionGetOrDelete == true){
+            if(countTopGD == - 120){
+                countBottomGD = -120;
+                stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+            }
+            secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
+        }else{
+            if(countBottomGD == 120){
+                countTopGD = 120;
+                stopInterval = setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+            }
+            secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+        }
+    }
+    if(marginCountBottom != -20){
+        if(pointer == 0){
+            marginCountBottom = 220;
+            clearInterval(firstInterval);
+
+            if(condition == false){
+               countBottomAU = -220;
+               firstInterval = setInterval(moveMarginTop,10,'get');
+               stopInterval = setInterval(moveBottomButtonAU,10,'update',true,0);
+            }else{
+               firstInterval = setInterval(moveMarginTop,10,'update');
+            }
+            //setTimeout(setHiddenForm1,500);
+            setInterval(hideElement,5,"form1");
+        }
+        else if(condition == true){
+           countBottomAU = -220;
+           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
+        }
+        else{
+           countBottomAU = 0;
+           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,220);
+        }
+    }else{
+        condition = true;
+        clearInterval(firstInterval);
+        clearInterval(intervalHide);
+        firstInterval = setInterval(moveMarginBottom,10,'update');
+        document.getElementById("form1").style.opacity = 1;
+        document.getElementById("form1").style.visibility = "visible";
+    }
+    pointer = 0;
+}
+
+function displayFormUpdateId(){
+    document.getElementById("form1").style.visibility = "hidden";
+    document.getElementById("getId").style.visibility = "hidden";
+    document.getElementById("deleteId").style.visibility = "hidden";
+    document.getElementById("form2").style.visibility = "visible";
+    clearInterval(stopInterval);
+
+    if(GetDeleteMarginCountBottom != -20){
+        clearInterval(secondInterval);
+
+        if(conditionGetOrDelete == true){
+            if(countTopGD == - 120){
+                countBottomGD = -120;
+                stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+            }
+            secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
+        }else{
+            if(countBottomGD == 120){
+                countTopGD = 120;
+                stopInterval = setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+            }
+            secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+        }
+    }
+    if(marginCountBottom != -20){
+        if(pointer == 1){
+            marginCountBottom = 220;
+            clearInterval(firstInterval);
+
+            if(condition == true){
+               countBottomAU = -220;
+               firstInterval = setInterval(moveMarginTop,10,'update');
+               stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
+            }else{
+               firstInterval = setInterval(moveMarginTop,10,'get');
+            }
+            setTimeout(setHiddenForm2,500);
+        }
+        else if(condition == true){
+            countTopAU = 0;
+            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,-220);
+        }
+        else{
+            countTopAU = 220;
+            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
+        }
+    }
+    else{
+        condition = false;
+        clearInterval(firstInterval);
+        firstInterval = setInterval(moveMarginBottom,10,'get');
+    }
+    pointer = 1;
+}
+
+function displayFormGetId(){
+    document.getElementById("form1").style.visibility = "hidden";
+    document.getElementById("form2").style.visibility = "hidden";
+    document.getElementById("deleteId").style.visibility = "hidden";
+    document.getElementById("getId").style.visibility = "visible";
+    clearInterval(stopInterval);
+
+    if(marginCountBottom != -20){
+        clearInterval(firstInterval);
+
+        if(condition == true){
+            if(countTopAU == -220){
+               countBottomAU = -220;
+               stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
+            }
+            firstInterval = setInterval(moveMarginTop,10,'update');
+        }else{
+            if(countBottomAU == 220){
+               countTopAU = 220;
+               stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
+            }
+            firstInterval = setInterval(moveMarginTop,10,'get');
+        }
+    }
+    if(GetDeleteMarginCountBottom != -20){
+        if(pointer == 2){
+            GetDeleteMarginCountBottom = 120;
+            clearInterval(secondInterval);
+
+            if(conditionGetOrDelete == false){
+               countBottomGD = -120;
+               secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+               stopInterval = setInterval(moveBottomButtonGD,10,'delete',true,0);
+            }else{
+               secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
+            }
+            setTimeout(setHiddenGetId,400);
+        }
+        else if(conditionGetOrDelete == true){
+           countBottomGD = -120;
+           stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+        }
+        else{
+           countBottomGD = 0;
+           stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,120);
+        }
+    }
+    else{
+        conditionGetOrDelete = true;
+        clearInterval(secondInterval);
+        secondInterval = setInterval(moveMarginBottomForGetOrDelete,10,'delete');
+    }
+    pointer = 2;
+}
+
+function displayFormDeleteId(){
+    document.getElementById("form1").style.visibility = "hidden";
+    document.getElementById("form2").style.visibility = "hidden";
+    document.getElementById("getId").style.visibility = "hidden";
+    document.getElementById("deleteId").style.visibility = "visible";
+    clearInterval(stopInterval);
+
+    if(marginCountBottom != -20){
+        clearInterval(firstInterval);
+
+        if(condition == true){
+            if(countTopAU == -220){
+               countBottomAU = -220;
+               stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
+            }
+            firstInterval = setInterval(moveMarginTop,10,'update');
+        }else{
+            if(countBottomAU == 220){
+               countTopAU = 120;
+               stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
+            }
+            firstInterval = setInterval(moveMarginTop,10,'get');
+        }
+    }
+    if(GetDeleteMarginCountBottom != -20){
+        if(pointer == 3){
+           GetDeleteMarginCountBottom = 120;
+            clearInterval(secondInterval);
+
+            if(conditionGetOrDelete == true){
+               countBottomGD = -120;
+               secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
+               stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
+            }else{
+               secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
+            }
+            setTimeout(setHiddenDeleteId,400);
+        }
+        else if(conditionGetOrDelete == true){
+           countTopGD = 0;
+           stopInterval = setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,-120);
+        }
+        else{
+           countTopGD = 120;
+           stopInterval = setInterval(moveTopButtonGD,10,'delete',conditionGetOrDelete,0);
+        }
+    }else{
+        conditionGetOrDelete = false;
+        clearInterval(secondInterval);
+        secondInterval = setInterval(moveMarginBottomForGetOrDelete,10,'getAll');
+    }
+    pointer = 3;
+}
+
+function displayFormGet(){
+var id = document.getElementById("id-product-get").value;
+document.getElementById("getId").action+=id;
+}
+function displayFormDelete(){
+var id = document.getElementById("id-product-delete").value;
+document.getElementById("deleteId").action+=id;
+}
+
+</script>
 </html>

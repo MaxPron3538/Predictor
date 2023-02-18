@@ -46,14 +46,14 @@
 }
 
 .button1 {
-    background-color: transparent;
+    background-color: #4CAF50;
     color: black;
     border: 2px solid #B0C4DE;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .button1:hover {
-    background-color: #4CAF50;
+    background-color: #006400;
     color: white;
 }
 
