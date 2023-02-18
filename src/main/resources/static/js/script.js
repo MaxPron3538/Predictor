@@ -169,7 +169,7 @@ function displayFormAdd(){
             }else{
                firstInterval = setInterval(moveMarginTop,10,'update');
             }
-            setTimeout(setHiddenForm1,500);
+            setTimeout(setHiddenForm1,100);
         }
         else if(condition == true){
            countBottomAU = -220;
@@ -223,7 +223,7 @@ function displayFormUpdateId(){
             }else{
                firstInterval = setInterval(moveMarginTop,10,'get');
             }
-            setTimeout(setHiddenForm2,500);
+            setTimeout(setHiddenForm2,100);
         }
         else if(condition == true){
             countTopAU = 0;
@@ -278,7 +278,7 @@ function displayFormGetId(){
             }else{
                secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
             }
-            setTimeout(setHiddenGetId,400);
+            setTimeout(setHiddenGetId,100);
         }
         else if(conditionGetOrDelete == true){
            countBottomGD = -120;
@@ -333,7 +333,7 @@ function displayFormDeleteId(){
             }else{
                secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
             }
-            setTimeout(setHiddenDeleteId,400);
+            setTimeout(setHiddenDeleteId,100);
         }
         else if(conditionGetOrDelete == true){
            countTopGD = 0;
