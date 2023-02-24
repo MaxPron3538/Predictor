@@ -15,19 +15,49 @@
 <div class="square">
     <div align="center">
         <b style="position: relative; top: 50px; font-size: 20px;">Please, sign in to your account</b>
-        <form class="form1" action="http://localhost:8080/signIn" method="post">
+        <form class="form1" action="http://localhost:8080/signIn" th:object="${account}" method="post">
             <input type="hidden" name="_method" value="put"/>
             <a style="position: relative; top: -20px; padding-right: 15px;">Email address:</a>
-            <input style="position: relative; top: -20px" class="text-field__input" type="text" name="email" id="id-email" placeholder="email">
+            <input style="position: relative; top: -20px" class="text-field__input" type="text" th:field="*{email}" name="email" id="id-email" placeholder="email">
             <p><a style="position: relative; top: -20px; padding-right: 45px;">Password:</a>
             <input style="position: relative; top: -20px" class="text-field__input" type="text" name="password" id="id-password" placeholder="password">
             <p><input id="SignIn" class="button button1" style="position: relative; width: 80%; margin-top: 20px; height: 10%; color: white;" type="submit" value="Sign in">
         </form>
+        <div id="statusCode" style="color: darkred; font-size:20px;" th:text="${status}"></div>
         <p><a style="position: relative; top: 20px;">If you haven't yet account,</a>
         <p><a>please <b>sign up.</b></a>
         <p><a href="http://localhost:8080/signUp" style="color: black;">http://localhost:8080/signUp</a>
-        <div style="color: darkred; font-size:20px;" th:text="${status}"></div>
     </div>
 </div>
 </body>
+<script>
+       var opacity = 1;
+       var interval;
+
+       function lowOpacity()
+       {
+          if(opacity >= 0)
+          {
+             document.getElementById("statusCode").style.opacity = opacity-0.1;
+             opacity=opacity-0.1;
+          }else{
+             clearInterval(interval);
+             interval = setInterval(highOpacity,100);
+          }
+       }
+
+       function highOpacity()
+       {
+          if(opacity <= 1)
+          {
+             document.getElementById("statusCode").style.opacity = opacity+0.1;
+             opacity=opacity+0.1;
+          }else{
+             clearInterval(interval);
+             interval = setInterval(lowOpacity,100);
+          }
+       }
+
+       interval = setInterval(lowOpacity,100);
+</script>
 </html>

@@ -1,16 +1,26 @@
 package main.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-public class Account {
+public class Account implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String surname;
     private String email;
     private String password;
+    private StatusCode statusCode;
+
+    @OneToMany(mappedBy = "account")
+    List<Product> productList;
 
     public int getId() {
         return id;
@@ -50,5 +60,13 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public StatusCode getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(StatusCode statusCode) {
+        this.statusCode = statusCode;
     }
 }

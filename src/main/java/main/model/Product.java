@@ -1,16 +1,22 @@
 package main.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Product {
+public class Product implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private double price;
     private String category;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name ="account_id",nullable = false)
+    private Account account;
 
     public int getId() {
         return id;

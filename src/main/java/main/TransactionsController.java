@@ -1,8 +1,10 @@
 package main;
 
+import main.model.Account;
 import main.model.Product;
 
 import main.model.ProductRepository;
+import main.model.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +24,12 @@ public class TransactionsController {
     private ProductRepository repository;
 
     @GetMapping("/products/")
-    public String list(Model model){
-        model.addAttribute("products",repository.findAll());
-        return "index";
+    public String list(@ModelAttribute Account account,Model model){
+        if(account.getStatusCode() == StatusCode.Ok){
+            model.addAttribute("products",repository.findAll());
+            return "index";
+        }
+        return "redirect:/";
     }
 
     @PostMapping("/products/")

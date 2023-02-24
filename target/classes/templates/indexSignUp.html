@@ -15,19 +15,49 @@
 <div class="square">
     <div align="center">
         <b style="position: relative; top: 40px; font-size: 20px;">Create your account</b>
-        <form class="form1" action="http://localhost:8080/signUp" method="post">
+        <form class="form1" action="http://localhost:8080/signUp" th:object="${account}" method="post">
             <a style="position: relative; top: -20px; padding-right: 65px;">Name:</a>
-            <input style="position: relative; top: -20px" class="text-field__input" type="text" name="name" id="id-name" placeholder="name">
+            <input style="position: relative; top: -20px" class="text-field__input" type="text" th:field="*{name}" name="name" id="id-name" placeholder="name">
             <p><a style="position: relative; top: -20px; padding-right: 45px;">Surname:</a>
-                <input style="position: relative; top: -20px" class="text-field__input" type="text" name="surname" id="id-surname" placeholder="surname">
+                <input style="position: relative; top: -20px" class="text-field__input" type="text" th:field="*{surname}" name="surname" id="id-surname" placeholder="surname">
             <p><a style="position: relative; top: -20px; padding-right: 15px;">Email address:</a>
-                <input style="position: relative; top: -20px" class="text-field__input" type="text" name="email" id="id-email" placeholder="email">
+                <input style="position: relative; top: -20px" class="text-field__input" type="text" th:field="*{email}" name="email" id="id-email" placeholder="email">
             <p><a style="position: relative; top: -20px; padding-right: 45px;">Password:</a>
                 <input style="position: relative; top: -20px" class="text-field__input" type="text" name="password" id="id-password" placeholder="password">
-            <p><input id="SignIn" class="button button1" onclick="initial()" style="position: relative; width: 80%; margin-top: 20px; height: 10%; color: white;" type="submit" value="Send">
+            <p><input id="SignIn" class="button button1" style="position: relative; width: 80%; height: 10%; color: white;" type="submit" value="Send">
         </form>
-        <div style="color: darkred; font-size:20px;" th:text="${status}"></div>
+        <div id="statusCode" style="color: darkred; font-size:20px;" th:text="${status}"></div>
     </div>
 </div>
 </body>
+<script>
+       var opacity = 1;
+       var interval;
+
+       function lowOpacity()
+       {
+          if(opacity >= 0)
+          {
+             document.getElementById("statusCode").style.opacity = opacity-0.1;
+             opacity=opacity-0.1;
+          }else{
+             clearInterval(interval);
+             interval = setInterval(highOpacity,100);
+          }
+       }
+
+       function highOpacity()
+       {
+          if(opacity <= 1)
+          {
+             document.getElementById("statusCode").style.opacity = opacity+0.1;
+             opacity=opacity+0.1;
+          }else{
+             clearInterval(interval);
+             interval = setInterval(lowOpacity,100);
+          }
+       }
+
+       interval = setInterval(lowOpacity,100);
+</script>
 </html>

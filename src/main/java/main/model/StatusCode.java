@@ -1,8 +1,9 @@
 package main.model;
 
 public enum StatusCode {
-    BAD("Incorrect input data!"),
-    NOTEXIST("You have not yet account!");
+    Ok("Ok"),
+    BAD("Incorrect input email or password!"),
+    NOT_EXIST("Incorrect data or you haven't yet account!");
 
     private final String text;
 
