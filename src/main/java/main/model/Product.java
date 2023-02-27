@@ -4,12 +4,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Product implements Serializable {
+public class Product{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
+    private int productId;
+    private String productName;
     private double price;
     private String category;
     private String description;
@@ -18,20 +17,20 @@ public class Product implements Serializable {
     @JoinColumn(name ="account_id",nullable = false)
     private Account account;
 
-    public int getId() {
-        return id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public double getPrice() {
@@ -56,5 +55,13 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

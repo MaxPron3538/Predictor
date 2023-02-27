@@ -8,10 +8,9 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Account implements Serializable {
+public class Account{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String surname;
@@ -69,4 +68,13 @@ public class Account implements Serializable {
     public void setStatusCode(StatusCode statusCode) {
         this.statusCode = statusCode;
     }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
 }

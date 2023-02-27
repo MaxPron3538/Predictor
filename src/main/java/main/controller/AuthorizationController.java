@@ -1,4 +1,4 @@
-package main;
+package main.controller;
 import main.model.Account;
 import main.model.AccountRepository;
 import main.model.StatusCode;
@@ -6,13 +6,10 @@ import main.model.ValidationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,8 +47,9 @@ public class AuthorizationController {
         List<String> listPasswords = repository.findAll().stream().map(Account::getPassword).collect(Collectors.toList());
 
         if(listEmails.contains(account.getEmail()) && listPasswords.contains(account.getPassword())){
-            account.setStatusCode(StatusCode.Ok);
-            attributes.addFlashAttribute("account",account);
+            Account signInAccount = repository.findById(account.getEmail().hashCode()*account.getPassword().hashCode()).get();
+            signInAccount.setStatusCode(StatusCode.Ok);
+            attributes.addFlashAttribute("account",signInAccount);
             return "redirect:/products/";
         }
         account.setPassword("");
@@ -64,16 +62,23 @@ public class AuthorizationController {
     @PostMapping("/signUp")
     public String addAccount(Account account,RedirectAttributes attributes,Model model){
         if(!account.getName().isEmpty() && !account.getSurname().isEmpty() && !account.getEmail().isEmpty() && !account.getPassword().isEmpty()){
-            if(ValidationData.validateEmail(account.getEmail()) && ValidationData.validatePassword(account.getPassword())){
-                repository.save(account);
-                account.setStatusCode(StatusCode.Ok);
-                attributes.addFlashAttribute("account",account);
-                return "redirect:/products/";
+            int id = Math.abs(account.getEmail().hashCode()*account.getPassword().hashCode());
+
+            if(!repository.existsById(id)){
+                if (ValidationData.validateEmail(account.getEmail()) && ValidationData.validatePassword(account.getPassword())) {
+                    account.setId(id);
+                    repository.save(account);
+                    account.setStatusCode(StatusCode.Ok);
+                    attributes.addFlashAttribute("account", account);
+                    return "redirect:/products/";
+                }
+                account.setPassword("");
+                model.addAttribute("account", account);
+                model.addAttribute("status",StatusCode.BAD);
+                return "indexSignUp";
             }
-            account.setPassword("");
-            model.addAttribute("account",account);
+            model.addAttribute("status",StatusCode.ALREADY_EXIST);
         }
-        model.addAttribute("status",StatusCode.BAD);
         return "indexSignUp";
     }
 }

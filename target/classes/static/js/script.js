@@ -93,7 +93,7 @@ function moveMarginTop(message){
 }
 
 function moveMarginBottom(message){
-    if(marginCountBottom < 220){
+    if(marginCountBottom < 200){
         button = document.getElementById(message);
         button.style.marginTop = marginCountBottom+"px";
         marginCountBottom+=20;
@@ -159,11 +159,11 @@ function displayFormAdd(){
     }
     if(marginCountBottom != -20){
         if(pointer == 0){
-            marginCountBottom = 220;
+            marginCountBottom = 200;
             clearInterval(firstInterval);
 
             if(condition == false){
-               countBottomAU = -220;
+               countBottomAU = -200;
                firstInterval = setInterval(moveMarginTop,10,'get');
                stopInterval = setInterval(moveBottomButtonAU,10,'update',true,0);
             }else{
@@ -172,12 +172,12 @@ function displayFormAdd(){
             setTimeout(setHiddenForm1,100);
         }
         else if(condition == true){
-           countBottomAU = -220;
+           countBottomAU = -200;
            stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
         }
         else{
            countBottomAU = 0;
-           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,220);
+           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,200);
         }
     }else{
         condition = true;
@@ -213,11 +213,11 @@ function displayFormUpdateId(){
     }
     if(marginCountBottom != -20){
         if(pointer == 1){
-            marginCountBottom = 220;
+            marginCountBottom = 200;
             clearInterval(firstInterval);
 
             if(condition == true){
-               countBottomAU = -220;
+               countBottomAU = -200;
                firstInterval = setInterval(moveMarginTop,10,'update');
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }else{
@@ -227,10 +227,10 @@ function displayFormUpdateId(){
         }
         else if(condition == true){
             countTopAU = 0;
-            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,-220);
+            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,-200);
         }
         else{
-            countTopAU = 220;
+            countTopAU = 200;
             stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
         }
     }
@@ -253,14 +253,14 @@ function displayFormGetId(){
         clearInterval(firstInterval);
 
         if(condition == true){
-            if(countTopAU == -220){
-               countBottomAU = -220;
+            if(countTopAU == -200){
+               countBottomAU = -200;
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'update');
         }else{
-            if(countBottomAU == 220){
-               countTopAU = 220;
+            if(countBottomAU == 200){
+               countTopAU = 200;
                stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'get');
@@ -308,13 +308,13 @@ function displayFormDeleteId(){
         clearInterval(firstInterval);
 
         if(condition == true){
-            if(countTopAU == -220){
-               countBottomAU = -220;
+            if(countTopAU == -200){
+               countBottomAU = -200;
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'update');
         }else{
-            if(countBottomAU == 220){
+            if(countBottomAU == 200){
                countTopAU = 120;
                stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
             }
@@ -358,4 +358,11 @@ document.getElementById("getId").action+=id;
 function displayFormDelete(){
 var id = document.getElementById("id-product-delete").value;
 document.getElementById("deleteId").action+=id;
+}
+
+function displayFormUpdate(){
+alert("Hello");
+var id = document.getElementById("id-product-update").value;
+document.getElementById("form2").action+=id;
+alert(document.getElementById("form2").action);
 }
