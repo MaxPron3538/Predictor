@@ -28,6 +28,11 @@ public class AuthorizationController {
     @GetMapping("/")
     public ModelAndView signIn(@ModelAttribute("account") Account account) {
         ModelAndView modelAndView = new ModelAndView();
+
+        if(account.getName() != null && account.getSurname() != null){
+            modelAndView.setViewName("redirect:/products/");
+            return  modelAndView;
+        }
         modelAndView.addObject("account", new Account());
         modelAndView.setViewName("indexSignIn");
         return modelAndView;
@@ -36,6 +41,11 @@ public class AuthorizationController {
     @GetMapping("/signUp")
     public ModelAndView signUp(@ModelAttribute("account") Account account) {
         ModelAndView modelAndView = new ModelAndView();
+
+        if(account.getName() != null && account.getSurname() != null){
+            modelAndView.setViewName("redirect:/products/");
+            return  modelAndView;
+        }
         modelAndView.addObject("account", new Account());
         modelAndView.setViewName("indexSignUp");
         return modelAndView;

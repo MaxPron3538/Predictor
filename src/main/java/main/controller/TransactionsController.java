@@ -31,7 +31,7 @@ public class TransactionsController {
 
     @PostMapping("/products/")
     public String add(@ModelAttribute Account account,Product product,Model model){
-        int id = Math.abs(product.getProductName().hashCode()*product.getCategory().hashCode());
+        int id = Math.abs(product.getProductName().hashCode()*account.getEmail().hashCode());
         product.setProductId(id);
         product.setAccount(account);
         repositoryProducts.save(product);
