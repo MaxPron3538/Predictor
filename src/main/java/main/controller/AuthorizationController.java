@@ -29,9 +29,13 @@ public class AuthorizationController {
     public ModelAndView signIn(@ModelAttribute("account") Account account) {
         ModelAndView modelAndView = new ModelAndView();
 
+        if(account.getStatusCode() == StatusCode.SIGN_OUT){
+            modelAndView.setViewName("indexSignInExist");
+            return modelAndView;
+        }
         if(account.getName() != null && account.getSurname() != null){
             modelAndView.setViewName("redirect:/products/");
-            return  modelAndView;
+            return modelAndView;
         }
         modelAndView.addObject("account", new Account());
         modelAndView.setViewName("indexSignIn");
@@ -65,13 +69,22 @@ public class AuthorizationController {
         account.setPassword("");
         model.addAttribute("account",account);
         model.addAttribute("status",StatusCode.NOT_EXIST);
+
+        if(account.getStatusCode()==StatusCode.SIGN_OUT){
+            return "indexSignInExist";
+        }
         return "indexSignIn";
     }
 
 
     @PostMapping("/signUp")
-    public String addAccount(Account account,RedirectAttributes attributes,Model model){
-        if(!account.getName().isEmpty() && !account.getSurname().isEmpty() && !account.getEmail().isEmpty() && !account.getPassword().isEmpty()){
+    public String createAccount(Account account,RedirectAttributes attributes,Model model){
+        List<String> listEmails = repository.findAll().stream().map(Account::getEmail).collect(Collectors.toList());
+
+        if(listEmails.contains(account.getEmail())){
+            model.addAttribute("status",StatusCode.ALREADY_EXIST);
+        }
+        else if(!account.getName().isEmpty() && !account.getSurname().isEmpty() && !account.getEmail().isEmpty() && !account.getPassword().isEmpty()){
             int id = Math.abs(account.getEmail().hashCode()*account.getPassword().hashCode());
 
             if(!repository.existsById(id)){
@@ -90,5 +103,14 @@ public class AuthorizationController {
             model.addAttribute("status",StatusCode.ALREADY_EXIST);
         }
         return "indexSignUp";
+    }
+
+    @PostMapping("/signOut")
+    public ModelAndView signOut(Account account){
+        ModelAndView modelAndView = new ModelAndView();
+        account.setStatusCode(StatusCode.SIGN_OUT);
+        modelAndView.addObject(account);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
     }
 }

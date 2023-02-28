@@ -21,12 +21,14 @@
             <input style="position: relative; top: -20px" class="text-field__input" type="text" th:field="*{email}" name="email" id="id-email" placeholder="email">
             <p><a style="position: relative; top: -20px; padding-right: 45px;">Password:</a>
             <input style="position: relative; top: -20px" class="text-field__input" type="text" name="password" id="id-password" placeholder="password">
-            <p><input id="SignIn" class="button button1" style="position: relative; width: 80%; margin-top: 20px; height: 10%; color: white;" type="submit" value="Sign in">
+            <p><input id="SignIn" class="button button1" style="position: relative; width: 80%; margin-top: 10px; height: 10%; color: white;" type="submit" value="Sign in">
         </form>
-        <div id="statusCode" style="color: darkred; font-size:20px;" th:text="${status}"></div>
-        <p><a style="position: relative; top: 20px;">If you haven't yet account,</a>
-        <p><a>please <b>sign up.</b></a>
-        <p><a href="http://localhost:8080/signUp" style="color: #006400;">http://localhost:8080/signUp</a>
+        <p><a style="position: relative; top: -5px;">If you haven't yet account,</a>
+        <p><a style="position: relative; top: -15px;">please <b>sign up.</b></a>
+        <form style="position: relative; top:-20px;" action="http://localhost:8080/signUp">
+        <p><input id="SignUp" class="button button1" style="position: relative; width: 60%; height: 5%; color: white;" type="submit" value="Sign Up">
+        </form>
+        <div id="statusCode" style="color: darkred; font-size:18px; position: relative; top: -20px;" th:text="${status}"></div>
     </div>
 </div>
 </body>

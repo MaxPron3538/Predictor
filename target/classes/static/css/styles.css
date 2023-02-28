@@ -45,6 +45,19 @@
     cursor: pointer;
 }
 
+.buttonBack {
+    background-color: transparent;
+    color: black;
+    border: 2px solid lightsteelblue;
+    border-radius: 10px;
+}
+
+.buttonBack:hover {
+    background-color: darkred;
+    color: white;
+}
+
+
 
 .button1 {
     background-color: transparent;
