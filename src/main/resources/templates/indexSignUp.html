@@ -23,7 +23,7 @@
             <p><a style="position: relative; top: -20px; padding-right: 15px;">Email address:</a>
                 <input style="position: relative; top: -20px" class="text-field__input" type="text" th:field="*{email}" name="email" id="id-email" placeholder="email">
             <p><a style="position: relative; top: -20px; padding-right: 45px;">Password:</a>
-                <input style="position: relative; top: -20px" class="text-field__input" type="text" name="password" id="id-password" placeholder="password">
+                <input style="position: relative; top: -20px" class="text-field__input" type="password" name="password" id="id-password" placeholder="password">
             <p><input id="SignIn" class="button button1" style="position: relative; width: 80%; height: 10%; color: white;" type="submit" value="Send">
         </form>
         <div id="statusCode" style="color: darkred; font-size:18px;" th:text="${status}"></div>
