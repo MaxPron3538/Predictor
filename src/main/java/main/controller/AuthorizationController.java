@@ -1,8 +1,8 @@
 package main.controller;
-import main.model.Account;
-import main.model.AccountRepository;
-import main.model.StatusCode;
-import main.model.ValidationData;
+import main.model.*;
+import main.model.entities.Account;
+import main.model.prediction.ParserInflation;
+import main.model.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,11 @@ public class AuthorizationController {
     @GetMapping("/")
     public ModelAndView signIn(@ModelAttribute("account") Account account) {
         ModelAndView modelAndView = new ModelAndView();
-
+        try {
+            ParserInflation.parseHTMLTableInflation();
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
         if(account.getName() != null && account.getSurname() != null){
             modelAndView.setViewName("redirect:/products/");
             return modelAndView;

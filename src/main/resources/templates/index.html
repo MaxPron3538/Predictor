@@ -12,7 +12,7 @@
     <h1 text align="center" style="font-family: math;">PREDICTOR</h1>
     <h3 text align="center" style="margin-top: -30px; font-family: system-ui;">Simplify your home bookkeeping</h3>
     <div style="width: 100%; height: 5px; position: relative; top: -18px; background-color: #4CAF50;"></div>
-    <button id="select"></button>
+    <button id="select" onclick="doHello()"></button>
 </div>
 <p>
 <div>
@@ -78,9 +78,17 @@
 </div>
 </body>
 <script>
-function displayFormUpdate(){
+function displayFormUpdate()
+{
    var id = document.getElementById("id-product-update").value;
    document.getElementById("form2").action+=id;
 }
+
+/*
+function doHello()
+{
+   document.getElementById("select").style.width = 100 + "px";
+}
+*/
 </script>
 </html>

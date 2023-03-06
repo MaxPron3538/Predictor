@@ -1,6 +1,10 @@
 package main.controller;
 
 import main.model.*;
+import main.model.entities.Account;
+import main.model.entities.Product;
+import main.model.repositories.AccountRepository;
+import main.model.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +24,7 @@ public class TransactionsController {
     private ProductRepository repositoryProducts;
 
     @GetMapping("/products/")
-    public String list(@ModelAttribute Account account,Model model){
+    public String list(@ModelAttribute Account account, Model model){
         if(account.getStatusCode() == StatusCode.Ok){
             Account existAccount = repositoryAccounts.findById(account.getId()).get();
             model.addAttribute("products", existAccount.getProductList());
@@ -30,7 +34,7 @@ public class TransactionsController {
     }
 
     @PostMapping("/products/")
-    public String add(@ModelAttribute Account account,Product product,Model model){
+    public String add(@ModelAttribute Account account, Product product, Model model){
         int id = Math.abs(product.getProductName().hashCode()*account.getEmail().hashCode());
         product.setProductId(id);
         product.setAccount(account);
@@ -48,7 +52,7 @@ public class TransactionsController {
     }
 
     @PutMapping("/products/{productId}")
-    public String update(@PathVariable("productId") int id,@ModelAttribute Account account,Product product){
+    public String update(@PathVariable("productId") int id, @ModelAttribute Account account, Product product){
         if(repositoryProducts.existsById(id)){
             Optional<Product> optional = repositoryProducts.findAll().stream().
                     filter(s -> s.getProductId()==id).filter(s -> s.getAccount().getId() == account.getId()).findFirst();

@@ -1,14 +1,14 @@
-package main.model;
+package main.model.entities;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
+import main.model.StatusCode;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class Account{
+public class Account {
 
     @Id
     private int id;

@@ -1,10 +1,12 @@
-package main.model;
+package main.model.entities;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Product{
+public class Product {
 
     @Id
     private int productId;
