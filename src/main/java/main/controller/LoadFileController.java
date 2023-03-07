@@ -1,13 +1,53 @@
 package main.controller;
 
+import main.model.StatusCode;
+import main.model.entities.Account;
+import main.model.repositories.AccountRepository;
+import main.model.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
+@SessionAttributes("account")
 public class LoadFileController {
 
-    @GetMapping("/addExtract")
-    public String getFormForExtract(){
-        return "indexExtract";
+    @Autowired
+    private AccountRepository repositoryAccounts;
+
+    @GetMapping("/uploadFile")
+    public String getFormForUploadFile(@ModelAttribute Account account){
+        if(account.getStatusCode() == StatusCode.Ok){
+            return "indexUploadFile";
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/uploadFile")
+    public String uploadFileAndSave(@RequestParam("file") MultipartFile multipartFile) {
+        try{
+            InputStream initialStream = multipartFile.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(initialStream, "UTF-8"));
+            List<String> bankStatement = bufferedReader.lines().collect(Collectors.toList());
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+    return "indexUploadFile";
+    }
+
+    @PostMapping("/skipUpload")
+    public String skipUploadFile(@ModelAttribute Account account, RedirectAttributes attributes){
+        account.setStatusCode(StatusCode.Ok);
+        attributes.addFlashAttribute("account",account);
+        return "redirect:/products/";
     }
 }

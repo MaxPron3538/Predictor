@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Predictor</title>
+    <link rel="stylesheet" href="/css/stylesUploadFile.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+<body>
+<div style="width: 100%; height: 70px; position: relative; top: -22px; background-color: #36373d; color: white;">
+    <h1 text align="center" style="font-family: math;">PREDICTOR</h1>
+    <h3 text align="center" style="margin-top: -30px; font-family: system-ui;">Simplify your home bookkeeping</h3>
+    <div style="width: 100%; height: 5px; position: relative; top: -18px; background-color: #4CAF50;"></div>
+</div>
+<div class="square" align="center">
+    <b style="position: relative; top: 50px; font-size: 20px;">Please, upload bank statement</b>
+    <form id="uploadbanner" align="center" style="position: relative; top: 80px;" enctype="multipart/form-data" method="post" action="http://localhost:8080/uploadFile/">
+        <label class="button-upload" style="margin-left: 0%;" for="upload">Upload File</label>
+        <input id="upload" type="file" accept=".csv" name="file" onclick="getMessage()">
+        <p><label id="filename" style="color: darkred;position: relative; top: 10px; font-size: 20px;"></label>
+        <p><input type="submit" class="button-upload" style="position: relative; top: 20px; margin-left:0px; width:250px;" value="Submit"/>
+    </form>
+    <form id ="skip" style="position: relative; margin-top: 120px;" method="post" action="http://localhost:8080/skipUpload">
+        <p><input id="submit" class="button-upload" type="submit" style="position: relative; width: 20%; height: 10%; margin-left: 0px;" value="skip"></p>
+    </form>
+</div>
+</body>
+<script>
+    const filepicker = document.getElementById("upload");
+
+    filepicker.addEventListener("change", (event) => {
+      const files = event.target.files;
+      document.getElementById("filename").textContent=files[0].name;
+    });
+</script>
+</html>

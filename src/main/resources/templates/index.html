@@ -44,9 +44,12 @@
          <input type="hidden" name="_method" value="delete"/>
          <input id="deleteAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Delete All products">
         </form>
+        <p><form action="http://localhost:8080/uploadFile" method="get">
+        <input id="uploadStatement" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Upload bank statement">
+        </form>
     </div>
     <div align="center">
-        <form id ="form1" style="visibility: hidden; margin-top: -560px;" method="post" action="http://localhost:8080/products/">
+        <form id ="form1" style="visibility: hidden; margin-top: -640px;" method="post" action="http://localhost:8080/products/">
             <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="productName" id="name-product-add" placeholder="Name">
             <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
             <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Category" id="category-product-add" placeholder="Category">

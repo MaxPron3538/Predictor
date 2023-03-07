@@ -25,17 +25,20 @@ public class AuthorizationController {
     public Account createAccount() {
         return new Account();
     }
+
     @GetMapping("/")
     public ModelAndView signIn(@ModelAttribute("account") Account account) {
         ModelAndView modelAndView = new ModelAndView();
-        try {
-            ParserInflation.parseHTMLTableInflation();
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
+
         if(account.getName() != null && account.getSurname() != null){
-            modelAndView.setViewName("redirect:/products/");
-            return modelAndView;
+            Account existAccount = repository.findAll().stream()
+                    .filter(s -> s.getEmail().equals(account.getEmail()) && s.getPassword().equals(account.getPassword())).findFirst().get();
+            if(!existAccount.getProductList().isEmpty()){
+                modelAndView.setViewName("redirect:/products/");
+                return modelAndView;
+            }
+            modelAndView.setViewName("redirect:/uploadFile");
+            return  modelAndView;
         }
         modelAndView.addObject("account", new Account());
         modelAndView.setViewName("indexSignIn");
@@ -47,7 +50,13 @@ public class AuthorizationController {
         ModelAndView modelAndView = new ModelAndView();
 
         if(account.getName() != null && account.getSurname() != null){
-            modelAndView.setViewName("redirect:/products/");
+            Account existAccount = repository.findAll().stream()
+                    .filter(s -> s.getEmail().equals(account.getEmail()) && s.getPassword().equals(account.getPassword())).findFirst().get();
+            if(!existAccount.getProductList().isEmpty()){
+                modelAndView.setViewName("redirect:/products/");
+                return modelAndView;
+            }
+            modelAndView.setViewName("redirect:/uploadFile");
             return  modelAndView;
         }
         modelAndView.addObject("account", new Account());
@@ -64,7 +73,10 @@ public class AuthorizationController {
             Account signInAccount = repository.findById(Math.abs(account.getEmail().hashCode()*account.getPassword().hashCode())).get();
             signInAccount.setStatusCode(StatusCode.Ok);
             attributes.addFlashAttribute("account",signInAccount);
-            return "redirect:/products/";
+            if(!signInAccount.getProductList().isEmpty()){
+                return "redirect:/products/";
+            }
+            return "redirect:/uploadFile";
         }
         account.setPassword("");
         model.addAttribute("account",account);
@@ -83,7 +95,7 @@ public class AuthorizationController {
                     repository.save(account);
                     account.setStatusCode(StatusCode.Ok);
                     attributes.addFlashAttribute("account", account);
-                    return "redirect:/products/";
+                    return "redirect:/uploadFile";
                 }
                 account.setPassword("");
                 model.addAttribute("account", account);
