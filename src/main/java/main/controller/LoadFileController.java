@@ -40,8 +40,7 @@ public class LoadFileController {
            // List<String> bankStatement = bufferedReader.lines().collect(Collectors.toList());
             //double[][] bankStatementTable;
 
-            ParseBankStatement.parsePDFFormat(initialStream,multipartFile.getOriginalFilename());
-
+            ParseBankStatement.printStatement(initialStream,multipartFile.getOriginalFilename());
             /*
             switch (multipartFile.getContentType()){
                 case "application/pdf":
