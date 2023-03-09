@@ -93,13 +93,12 @@ function moveMarginTop(message){
 }
 
 function moveMarginBottom(message){
-    if(marginCountBottom < 200){
+    if(marginCountBottom < 220){
         button = document.getElementById(message);
         button.style.marginTop = marginCountBottom+"px";
         marginCountBottom+=20;
     }
 }
-
 
 function moveMarginBottomForGetOrDelete(message){
     if(GetDeleteMarginCountBottom < 120){
@@ -110,7 +109,7 @@ function moveMarginBottomForGetOrDelete(message){
 }
 
 function moveMarginTopForGetOrDelete(message){
-    if(GetDeleteMarginCountBottom >= 0){
+    if(GetDeleteMarginCountBottom > -20){
         button = document.getElementById(message);
         button.style.marginTop = GetDeleteMarginCountBottom+"px";
         GetDeleteMarginCountBottom-=20;
@@ -159,25 +158,25 @@ function displayFormAdd(){
     }
     if(marginCountBottom != -20){
         if(pointer == 0){
-            marginCountBottom = 200;
+            marginCountBottom = 220;
             clearInterval(firstInterval);
 
             if(condition == false){
-               countBottomAU = -200;
+               countBottomAU = -220;
                firstInterval = setInterval(moveMarginTop,10,'get');
                stopInterval = setInterval(moveBottomButtonAU,10,'update',true,0);
             }else{
                firstInterval = setInterval(moveMarginTop,10,'update');
             }
-            setTimeout(setHiddenForm1,100);
+            setTimeout(setHiddenForm1,120);
         }
         else if(condition == true){
-           countBottomAU = -200;
+           countBottomAU = -220;
            stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
         }
         else{
            countBottomAU = 0;
-           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,200);
+           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,220);
         }
     }else{
         condition = true;
@@ -198,7 +197,7 @@ function displayFormUpdateId(){
         clearInterval(secondInterval);
 
         if(conditionGetOrDelete == true){
-            if(countTopGD == - 120){
+            if(countTopGD == -120){
                 countBottomGD = -120;
                 stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
             }
@@ -213,24 +212,24 @@ function displayFormUpdateId(){
     }
     if(marginCountBottom != -20){
         if(pointer == 1){
-            marginCountBottom = 200;
+            marginCountBottom = 220;
             clearInterval(firstInterval);
 
             if(condition == true){
-               countBottomAU = -200;
+               countBottomAU = -220;
                firstInterval = setInterval(moveMarginTop,10,'update');
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }else{
                firstInterval = setInterval(moveMarginTop,10,'get');
             }
-            setTimeout(setHiddenForm2,100);
+            setTimeout(setHiddenForm2,120);
         }
         else if(condition == true){
             countTopAU = 0;
-            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,-200);
+            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,-220);
         }
         else{
-            countTopAU = 200;
+            countTopAU = 220;
             stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
         }
     }
@@ -253,14 +252,14 @@ function displayFormGetId(){
         clearInterval(firstInterval);
 
         if(condition == true){
-            if(countTopAU == -200){
-               countBottomAU = -200;
+            if(countTopAU == -220){
+               countBottomAU = -220;
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'update');
         }else{
-            if(countBottomAU == 200){
-               countTopAU = 200;
+            if(countBottomAU == 220){
+               countTopAU = 220;
                stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'get');
@@ -278,7 +277,7 @@ function displayFormGetId(){
             }else{
                secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
             }
-            setTimeout(setHiddenGetId,100);
+            setTimeout(setHiddenGetId,120);
         }
         else if(conditionGetOrDelete == true){
            countBottomGD = -120;
@@ -308,13 +307,13 @@ function displayFormDeleteId(){
         clearInterval(firstInterval);
 
         if(condition == true){
-            if(countTopAU == -200){
-               countBottomAU = -200;
+            if(countTopAU == -220){
+               countBottomAU = -220;
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'update');
         }else{
-            if(countBottomAU == 200){
+            if(countBottomAU == 220){
                countTopAU = 120;
                stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
             }
@@ -333,7 +332,7 @@ function displayFormDeleteId(){
             }else{
                secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
             }
-            setTimeout(setHiddenDeleteId,100);
+            setTimeout(setHiddenDeleteId,120);
         }
         else if(conditionGetOrDelete == true){
            countTopGD = 0;
@@ -355,13 +354,13 @@ function displayFormGet(){
 var id = document.getElementById("id-product-get").value;
 document.getElementById("getId").action+=id;
 }
+
 function displayFormDelete(){
 var id = document.getElementById("id-product-delete").value;
 document.getElementById("deleteId").action+=id;
 }
 
 function displayFormUpdate(){
-alert("Hello");
 var id = document.getElementById("id-product-update").value;
 document.getElementById("form2").action+=id;
 alert(document.getElementById("form2").action);

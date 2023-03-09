@@ -1,10 +1,12 @@
 C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\controller\TransactionsController.java
+C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\logic\ParseBankStatement.java
+C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\repositories\ProductRepository.java
 C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\ValidationData.java
 C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\StatusCode.java
 C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\Main.java
+C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\entities\Account.java
+C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\repositories\AccountRepository.java
+C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\entities\Product.java
 C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\controller\AuthorizationController.java
-C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\Product.java
+C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\logic\ParserInflation.java
 C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\controller\LoadFileController.java
-C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\Account.java
-C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\AccountRepository.java
-C:\Users\maxpr\GitHubProjects\Predictor\src\main\java\main\model\ProductRepository.java

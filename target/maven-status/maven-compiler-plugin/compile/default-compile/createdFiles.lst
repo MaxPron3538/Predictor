@@ -1,10 +1,6 @@
-main\model\Product.class
 main\model\StatusCode.class
-main\model\Account.class
-main\model\ProductRepository.class
 main\Main.class
 main\model\ValidationData.class
 main\controller\AuthorizationController.class
 main\controller\LoadFileController.class
 main\controller\TransactionsController.class
-main\model\AccountRepository.class

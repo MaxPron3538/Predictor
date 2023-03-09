@@ -1,7 +1,7 @@
 package main.controller;
-
 import main.model.StatusCode;
 import main.model.entities.Account;
+import main.model.logic.ParseBankStatement;
 import main.model.repositories.AccountRepository;
 import main.model.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +33,28 @@ public class LoadFileController {
     }
 
     @PostMapping("/uploadFile")
-    public String uploadFileAndSave(@RequestParam("file") MultipartFile multipartFile) {
+    public String uploadFileAndSave(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         try{
             InputStream initialStream = multipartFile.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(initialStream, "UTF-8"));
-            List<String> bankStatement = bufferedReader.lines().collect(Collectors.toList());
+           // BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(initialStream, "UTF-8"));
+           // List<String> bankStatement = bufferedReader.lines().collect(Collectors.toList());
+            //double[][] bankStatementTable;
+
+            ParseBankStatement.parsePDFFormat(initialStream,multipartFile.getOriginalFilename());
+
+            /*
+            switch (multipartFile.getContentType()){
+                case "application/pdf":
+                    bankStatementTable = ParseBankStatement.parsePDFFormat(initialStream);
+                    break;
+                case "application/vnd.ms-excel":
+                    bankStatementTable = ParseBankStatement.parseExelFormat(initialStream);
+                    break;
+                case "text/csv":
+                    bankStatementTable = ParseBankStatement.parseCSVFormat(initialStream);
+            }
+
+             */
         }catch (IOException ex){
             ex.printStackTrace();
         }

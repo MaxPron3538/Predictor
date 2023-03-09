@@ -38,18 +38,18 @@
         <p><button id="get" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormGetId()">Get product</button>
         <p><button id="delete" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormDeleteId()">Delete product</button>
         <p><form action="http://localhost:8080/products/" method="get">
-         <input id="getAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Get All products">
-        </form>
+        <input id="getAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Get All products">
+    </form>
         <p><form action="http://localhost:8080/products/" method="post">
-         <input type="hidden" name="_method" value="delete"/>
-         <input id="deleteAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Delete All products">
-        </form>
+        <input type="hidden" name="_method" value="delete"/>
+        <input id="deleteAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Delete All products">
+    </form>
         <p><form action="http://localhost:8080/uploadFile" method="get">
         <input id="uploadStatement" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Upload bank statement">
-        </form>
+    </form>
     </div>
     <div align="center">
-        <form id ="form1" style="visibility: hidden; margin-top: -640px;" method="post" action="http://localhost:8080/products/">
+        <form id ="form1" style="visibility: hidden; margin-top: -650px;" method="post" action="http://localhost:8080/products/">
             <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="productName" id="name-product-add" placeholder="Name">
             <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
             <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Category" id="category-product-add" placeholder="Category">
@@ -67,12 +67,12 @@
             <p><input style="position: relative; top: -75px" class="input1" type="submit" onclick="displayFormUpdate()" value="Send" />
         </form>
 
-        <form id ="getId" style="visibility: hidden; margin-top: -100px;" method="get" action="http://localhost:8080/products/">
+        <form id ="getId" style="visibility: hidden; margin-top: -90px;" method="get" action="http://localhost:8080/products/">
             <input class="text-field__input" type="text" name="productId" id="id-product-get" placeholder="Id">
             <p><input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
         </form>
 
-        <form id ="deleteId" style="visibility: hidden; margin-top: -20px;" method="post" action="http://localhost:8080/products/">
+        <form id ="deleteId" style="visibility: hidden; margin-top: -15px;" method="post" action="http://localhost:8080/products/">
             <input type="hidden" name="_method" value="delete"/>
             <input class="text-field__input" type="text" name="productId" id="id-product-delete" placeholder="Id">
             <p><input id="submit-delete-name" class="input1" onclick="displayFormDelete()" type="submit" value="Send"></p>

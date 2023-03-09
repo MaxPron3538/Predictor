@@ -13,15 +13,15 @@
     <div style="width: 100%; height: 5px; position: relative; top: -18px; background-color: #4CAF50;"></div>
 </div>
 <div class="square" align="center">
-    <b style="position: relative; top: 50px; font-size: 20px;">Please, upload bank statement</b>
+    <b style="position: relative; top: 50px; font-size: 20px;">Please, upload bank statement,or skip this step</b>
     <form id="uploadbanner" align="center" style="position: relative; top: 80px;" enctype="multipart/form-data" method="post" action="http://localhost:8080/uploadFile/">
         <label class="button-upload" style="margin-left: 0%;" for="upload">Upload File</label>
-        <input id="upload" type="file" accept=".csv" name="file" onclick="getMessage()">
+        <input id="upload" type="file" accept=".csv,.pdf,.xls" name="file" onclick="getMessage()">
         <p><label id="filename" style="color: darkred;position: relative; top: 10px; font-size: 20px;"></label>
-        <p><input type="submit" class="button-upload" style="position: relative; top: 20px; margin-left:0px; width:250px;" value="Submit"/>
+        <p><input type="submit" class="button-upload" style="position: relative; top: 10px; margin-left:0px;" value="Send"/>
     </form>
     <form id ="skip" style="position: relative; margin-top: 120px;" method="post" action="http://localhost:8080/skipUpload">
-        <p><input id="submit" class="button-upload" type="submit" style="position: relative; width: 20%; height: 10%; margin-left: 0px;" value="skip"></p>
+        <p><input id="submit" class="button-upload" type="submit" style="position: relative; margin-left: 0px;" value="Skip"></p>
     </form>
 </div>
 </body>
