@@ -21,7 +21,7 @@ public class ParseBankStatement {
     }
 
     public static List<List<String>> parsePDFFormat(InputStream inputStream,String fileName) throws IOException {
-        File contentFile = new File("src/main/resources/BankStatements/"+fileName);
+        File contentFile = new File("BankStatements" + fileName);
         OutputStream outputStream = new FileOutputStream(contentFile.getAbsolutePath());
         outputStream.write(inputStream.readAllBytes());
         List<List<String>> bankStatement = new ArrayList<>();
@@ -59,10 +59,15 @@ public class ParseBankStatement {
                 trElements = trElements.stream().filter(s -> !s.matches("\\D+[^UAH][^—]|\\+\\d+|\\D\\.|ua")).collect(Collectors.toList());
                 description = description.concat(" " + partDesc).trim();
 
-                readyToSaveTransaction.add(transaction.get(0));
-                readyToSaveTransaction.add(transaction.get(1));
-                readyToSaveTransaction.add(description);
-                readyToSaveTransaction.addAll(trElements);
+                readyToSaveTransaction.add(transaction.get(0).trim());
+                readyToSaveTransaction.add(transaction.get(1).trim());
+
+                if(description.equals("")){
+                    readyToSaveTransaction.addAll(trElements);
+                }else {
+                    readyToSaveTransaction.add(description);
+                    readyToSaveTransaction.addAll(trElements);
+                }
                 bankStatement.add(readyToSaveTransaction);
             }
         }
@@ -75,15 +80,15 @@ public class ParseBankStatement {
         return bankStatement;
     }
 
-    public static void printStatement(InputStream inputStream,String fileName) throws IOException {
-         List<List<String>> statement = parsePDFFormat(inputStream,fileName);
+    public static void print(InputStream inputStream,String filename) throws IOException {
+        List<List<String>> bankStatement = ParseBankStatement.parsePDFFormat(inputStream,filename);
 
-         for(List<String> transactions : statement){
-             for (String elTransaction : transactions){
-                 System.out.print(elTransaction + "|");
-             }
-             System.out.println("----------------------------------------------------------------------------");
-         }
+        for(List<String> transaction : bankStatement){
+            for(String elOfTr : transaction){
+                System.out.print(elOfTr+"|");
+            }
+            System.out.println();
+        }
     }
 
     public static double[][] parseCSVFormat(InputStream inputStream){

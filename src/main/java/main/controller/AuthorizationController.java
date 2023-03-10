@@ -32,7 +32,7 @@ public class AuthorizationController {
             Account existAccount = repository.findAll().stream()
                     .filter(s -> s.getEmail().equals(account.getEmail()) && s.getPassword().equals(account.getPassword())).findFirst().get();
             if(!existAccount.getProductList().isEmpty()){
-                modelAndView.setViewName("redirect:/products/");
+                modelAndView.setViewName("redirect:/transactions/");
                 return modelAndView;
             }
             modelAndView.setViewName("redirect:/uploadFile");
@@ -51,7 +51,7 @@ public class AuthorizationController {
             Account existAccount = repository.findAll().stream()
                     .filter(s -> s.getEmail().equals(account.getEmail()) && s.getPassword().equals(account.getPassword())).findFirst().get();
             if(!existAccount.getProductList().isEmpty()){
-                modelAndView.setViewName("redirect:/products/");
+                modelAndView.setViewName("redirect:/transactions/");
                 return modelAndView;
             }
             modelAndView.setViewName("redirect:/uploadFile");
@@ -72,7 +72,7 @@ public class AuthorizationController {
             signInAccount.setStatusCode(StatusCode.Ok);
             attributes.addFlashAttribute("account",signInAccount);
             if(!signInAccount.getProductList().isEmpty()){
-                return "redirect:/products/";
+                return "redirect:/transactions/";
             }
             return "redirect:/uploadFile";
         }

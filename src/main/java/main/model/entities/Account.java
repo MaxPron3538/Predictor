@@ -5,6 +5,7 @@ import main.model.StatusCode;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class Account {
     private StatusCode statusCode;
 
     @OneToMany(mappedBy = "account")
-    List<Product> productList;
+    List<Transaction> transactionList;
 
     public int getId() {
         return id;
@@ -69,12 +70,12 @@ public class Account {
         this.statusCode = statusCode;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public List<Transaction> getProductList() {
+        return transactionList;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
+    public void setProductList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
     }
 
 }

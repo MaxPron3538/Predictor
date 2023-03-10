@@ -2,9 +2,9 @@ package main.controller;
 
 import main.model.*;
 import main.model.entities.Account;
-import main.model.entities.Product;
+import main.model.entities.Transaction;
 import main.model.repositories.AccountRepository;
-import main.model.repositories.ProductRepository;
+import main.model.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,64 +21,64 @@ public class TransactionsController {
     @Autowired
     private AccountRepository repositoryAccounts;
     @Autowired
-    private ProductRepository repositoryProducts;
+    private TransactionRepository repositoryTransactions;
 
-    @GetMapping("/products/")
+    @GetMapping("/transactions/")
     public String list(@ModelAttribute Account account, Model model){
         if(account.getStatusCode() == StatusCode.Ok){
             Account existAccount = repositoryAccounts.findById(account.getId()).get();
-            model.addAttribute("products", existAccount.getProductList());
+            model.addAttribute("transactions", existAccount.getProductList());
             return "index";
         }
         return "redirect:/";
     }
 
-    @PostMapping("/products/")
-    public String add(@ModelAttribute Account account, Product product, Model model){
-        int id = Math.abs(product.getProductName().hashCode()*account.getEmail().hashCode());
-        product.setProductId(id);
-        product.setAccount(account);
-        repositoryProducts.save(product);
-        model.addAttribute("products", repositoryAccounts.findById(account.getId()).get().getProductList());
+    @PostMapping("/transactions/")
+    public String add(@ModelAttribute Account account, Transaction transaction, Model model){
+        int id = Math.abs(transaction.getDescription().hashCode()*account.getEmail().hashCode());
+        transaction.setProductId(id);
+        transaction.setAccount(account);
+        repositoryTransactions.save(transaction);
+        model.addAttribute("transactions", repositoryAccounts.findById(account.getId()).get().getProductList());
         return "index";
     }
 
-    @GetMapping("/products/{productId}")
-    public String get(@PathVariable("productId") int id,@ModelAttribute Account account,Model model){
-        Optional<Product> optional = repositoryProducts.findAll().stream().
+    @GetMapping("/transactions/{transactionId}")
+    public String get(@PathVariable("transactionId") int id,@ModelAttribute Account account,Model model){
+        Optional<Transaction> optional = repositoryTransactions.findAll().stream().
                 filter(s -> s.getProductId()==id).filter(s -> s.getAccount().getId() == account.getId()).findFirst();
-        optional.ifPresent(product -> model.addAttribute("products", product));
+        optional.ifPresent(transaction -> model.addAttribute("transactions", transaction));
         return "index";
     }
 
-    @PutMapping("/products/{productId}")
-    public String update(@PathVariable("productId") int id, @ModelAttribute Account account, Product product){
-        if(repositoryProducts.existsById(id)){
-            Optional<Product> optional = repositoryProducts.findAll().stream().
+    @PutMapping("/transactions/{transactionId}")
+    public String update(@PathVariable("productId") int id, @ModelAttribute Account account, Transaction transaction){
+        if(repositoryTransactions.existsById(id)){
+            Optional<Transaction> optional = repositoryTransactions.findAll().stream().
                     filter(s -> s.getProductId()==id).filter(s -> s.getAccount().getId() == account.getId()).findFirst();
 
             if(optional.isPresent()){
-                product.setAccount(account);
-                repositoryProducts.save(product);
+                transaction.setAccount(account);
+                repositoryTransactions.save(transaction);
             }
         }
-        return "redirect:/products/";
+        return "redirect:/transactions/";
     }
 
-    @DeleteMapping("/products/{productId}")
-    public String delete(@PathVariable("productId") int id,@ModelAttribute Account account){
-        if(repositoryProducts.existsById(id)){
-            Optional<Product> optional = repositoryProducts.findAll().stream().
+    @DeleteMapping("/transactions/{transactionId}")
+    public String delete(@PathVariable("transactionId") int id,@ModelAttribute Account account){
+        if(repositoryTransactions.existsById(id)){
+            Optional<Transaction> optional = repositoryTransactions.findAll().stream().
                     filter(s -> s.getProductId()==id).filter(s -> s.getAccount().getId() == account.getId()).findFirst();
-            optional.ifPresent(product -> repositoryProducts.deleteById(product.getProductId()));
+            optional.ifPresent(transaction -> repositoryTransactions.deleteById(transaction.getProductId()));
         }
-        return "redirect:/products/";
+        return "redirect:/transactions/";
     }
 
-    @DeleteMapping("/products/")
+    @DeleteMapping("/transactions/")
     public String deleteList(@ModelAttribute Account account){
-        List<Product> productList = repositoryProducts.findAll().stream().filter(s -> s.getAccount().getId() == account.getId()).collect(Collectors.toList());
-        productList.forEach(s -> repositoryProducts.deleteById(s.getProductId()));
+        List<Transaction> transactionList = repositoryTransactions.findAll().stream().filter(s -> s.getAccount().getId() == account.getId()).collect(Collectors.toList());
+        transactionList.forEach(s -> repositoryTransactions.deleteById(s.getProductId()));
         return "index";
     }
 

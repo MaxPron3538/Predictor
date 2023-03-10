@@ -1,12 +1,13 @@
+main\model\logic\ConstructorBankStatement.class
 main\model\logic\ParseBankStatement.class
+main\model\repositories\TransactionRepository.class
 main\model\StatusCode.class
-main\model\entities\Product.class
 main\Main.class
 main\model\repositories\AccountRepository.class
 main\model\ValidationData.class
 main\controller\AuthorizationController.class
 main\model\entities\Account.class
-main\model\repositories\ProductRepository.class
 main\controller\LoadFileController.class
 main\controller\TransactionsController.class
+main\model\entities\Transaction.class
 main\model\logic\ParserInflation.class
