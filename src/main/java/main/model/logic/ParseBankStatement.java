@@ -6,10 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -29,7 +26,13 @@ public class ParseBankStatement {
         PDDocument document = PDDocument.load(contentFile);
         PDFTextStripper stripper = new PDFTextStripper();
         int numOfPages = document.getNumberOfPages();
+        stripper.setStartPage(numOfPages);
+        stripper.setEndPage(numOfPages+1);
+        String text = stripper.getText(document);
 
+        if(!text.contains("Balance")){
+            numOfPages-=1;
+        }
         for(int i = 0;i < numOfPages;i++){
             stripper.setStartPage(i);
             stripper.setEndPage(i+1);
@@ -47,14 +50,14 @@ public class ParseBankStatement {
                 List<String> readyToSaveTransaction = new ArrayList<>();
                 String lastStr = stElements.stream().filter(s -> s.contains("UAH")).findFirst().get();
                 int lastIndex = stElements.indexOf(lastStr);
-                List<String> transaction = new ArrayList<>(stElements.subList(0,lastIndex+1));
-                stElements.subList(0,lastIndex+1).clear();
+                List<String> transaction = new ArrayList<>(stElements.subList(0, lastIndex + 1));
+                stElements.subList(0, lastIndex + 1).clear();
 
                 List<String> desc = transaction.stream().filter(s -> !s.contains("UAH")
                         && !s.trim().matches("(\\d{2}\\.){2}\\d{4}|(\\d{2}\\:){2}\\d{2}")).map(String::trim).collect(Collectors.toList());
                 String description = String.join(" ", desc);
 
-                List<String> trElements = Arrays.asList(transaction.get(transaction.size()-1).split("\\s"));
+                List<String> trElements = Arrays.asList(transaction.get(transaction.size() - 1).split("\\s"));
                 String partDesc = trElements.stream().filter(s -> s.matches("\\D+[^UAH][^—]|\\+\\d+|\\D\\.|ua")).map(s -> s.concat(" ")).collect(Collectors.joining());
                 trElements = trElements.stream().filter(s -> !s.matches("\\D+[^UAH][^—]|\\+\\d+|\\D\\.|ua")).collect(Collectors.toList());
                 description = description.concat(" " + partDesc).trim();
@@ -62,13 +65,12 @@ public class ParseBankStatement {
                 readyToSaveTransaction.add(transaction.get(0).trim());
                 readyToSaveTransaction.add(transaction.get(1).trim());
 
-                if(description.equals("")){
-                    readyToSaveTransaction.addAll(trElements);
-                }else {
+                if (!description.equals("")) {
                     readyToSaveTransaction.add(description);
-                    readyToSaveTransaction.addAll(trElements);
                 }
+                readyToSaveTransaction.addAll(trElements);
                 bankStatement.add(readyToSaveTransaction);
+
             }
         }
         outputStream.close();
