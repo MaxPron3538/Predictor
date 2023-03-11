@@ -3,6 +3,7 @@ main\model\logic\ParseBankStatement.class
 main\model\repositories\TransactionRepository.class
 main\model\StatusCode.class
 main\Main.class
+main\model\logic\ParseBankStatement$1.class
 main\model\repositories\AccountRepository.class
 main\model\ValidationData.class
 main\controller\AuthorizationController.class

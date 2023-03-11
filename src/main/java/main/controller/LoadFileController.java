@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @SessionAttributes("account")
@@ -33,29 +34,25 @@ public class LoadFileController {
     }
 
     @PostMapping("/uploadFile")
-    public String uploadFileAndSave(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public String uploadFileAndSave(@RequestParam("file") MultipartFile multipartFile,@ModelAttribute Account account) throws IOException {
         try{
             InputStream initialStream = multipartFile.getInputStream();
-           // BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(initialStream, "UTF-8"));
-           // List<String> bankStatement = bufferedReader.lines().collect(Collectors.toList());
             List<List<String>> bankStatementTable;
 
             switch (multipartFile.getContentType()){
                 case "application/pdf":
-                    ParseBankStatement.print(initialStream,multipartFile.getOriginalFilename());
-                    /*
                     bankStatementTable = ParseBankStatement.parsePDFFormat(initialStream,multipartFile.getOriginalFilename());
                     ConstructorBankStatement constructor = new ConstructorBankStatement();
-                    List<Transaction> transactions = constructor.setDataInRepository(bankStatementTable);
+                    List<Transaction> transactions = constructor.setDataInRepository(bankStatementTable,account);
                     repositoryTransactions.saveAll(transactions);
 
-                     */
+                    //ParseBankStatement.print(initialStream,multipartFile.getOriginalFilename());
                     break;
                 case "application/vnd.ms-excel":
-                    //bankStatementTable = ParseBankStatement.parseExelFormat(initialStream);
+                    ParseBankStatement.parseExelFormat(initialStream,multipartFile.getOriginalFilename());
                     break;
                 case "text/csv":
-                    //bankStatementTable = ParseBankStatement.parseCSVFormat(initialStream);
+                    bankStatementTable = ParseBankStatement.parseCSVFormat(initialStream);
             }
         }catch (IOException ex){
             ex.printStackTrace();

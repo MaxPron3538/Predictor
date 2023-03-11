@@ -1,9 +1,13 @@
 package main.model.logic;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 import java.util.*;
@@ -12,7 +16,36 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ParseBankStatement {
-    public static double[][] parseExelFormat(InputStream inputStream) throws IOException {
+    public static double[][] parseExelFormat(InputStream inputStream,String fileName) throws IOException{
+        File contentFile = new File("BankStatements" + fileName);
+        OutputStream outputStream = new FileOutputStream(contentFile.getAbsolutePath());
+        outputStream.write(inputStream.readAllBytes());
+        FileInputStream fis = new FileInputStream(contentFile);
+
+        XSSFWorkbook workbook = new XSSFWorkbook(fis);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext())
+        {
+            Row row = rowIterator.next();
+            Iterator<Cell> cellIterator = row.cellIterator();
+
+            while (cellIterator.hasNext())
+            {
+                Cell cell = cellIterator.next();
+                switch (cell.getCellType())
+                {
+                    case NUMERIC:
+                        System.out.print(cell.getNumericCellValue() + "\t");
+                        break;
+                    case STRING:
+                        System.out.print(cell.getStringCellValue() + "\t");
+                        break;
+                }
+            }
+            System.out.println("");
+        }
 
         return null;
     }
@@ -58,8 +91,10 @@ public class ParseBankStatement {
                 String description = String.join(" ", desc);
 
                 List<String> trElements = Arrays.asList(transaction.get(transaction.size() - 1).split("\\s"));
-                String partDesc = trElements.stream().filter(s -> s.matches("\\D+[^UAH][^—]|\\+\\d+|\\D\\.|ua")).map(s -> s.concat(" ")).collect(Collectors.joining());
-                trElements = trElements.stream().filter(s -> !s.matches("\\D+[^UAH][^—]|\\+\\d+|\\D\\.|ua")).collect(Collectors.toList());
+                String partDesc = trElements.stream().filter(s -> s.matches("\\D+[^—]|\\+\\d+|\\D\\.|ua|\\d{1,3}|\\D+\\d+|\\D\\d\\D|\\d{6}\\*{4}\\d{4}"))
+                        .filter(s -> !s.contains("UAH")).map(s -> s.concat(" ")).collect(Collectors.joining());
+
+                trElements = trElements.stream().filter(s -> !partDesc.contains(s)).collect(Collectors.toList());
                 description = description.concat(" " + partDesc).trim();
 
                 readyToSaveTransaction.add(transaction.get(0).trim());
@@ -70,7 +105,6 @@ public class ParseBankStatement {
                 }
                 readyToSaveTransaction.addAll(trElements);
                 bankStatement.add(readyToSaveTransaction);
-
             }
         }
         outputStream.close();
@@ -93,8 +127,10 @@ public class ParseBankStatement {
         }
     }
 
-    public static double[][] parseCSVFormat(InputStream inputStream){
-
+    public static List<List<String>> parseCSVFormat(InputStream inputStream) throws UnsupportedEncodingException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+        List<String> bankStatement = bufferedReader.lines().collect(Collectors.toList());
+        bankStatement.forEach(System.out::println);
         return null;
     }
 }
