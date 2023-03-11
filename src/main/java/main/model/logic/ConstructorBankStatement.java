@@ -25,7 +25,7 @@ public class ConstructorBankStatement {
         for (List<String> strTransaction : bankStatement){
             Transaction saveTransaction = new Transaction();
             saveTransaction.setAccount(account);
-            saveTransaction.setProductId(account.getEmail().hashCode()*strTransaction.get(2).hashCode());
+            saveTransaction.setProductId(Math.abs(account.getEmail().hashCode()*strTransaction.get(2).hashCode()));
             List<String> strDate = Arrays.asList(strTransaction.get(0).split("\\."));
             List<String> strTime = Arrays.asList(strTransaction.get(1).split("\\:"));
             LocalDate date = LocalDate.of(Integer.parseInt(strDate.get(2).trim()),Integer.parseInt(strDate.get(1).trim()),Integer.parseInt(strDate.get(0).trim()));

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -39,14 +40,17 @@ public class LoadFileController {
             InputStream initialStream = multipartFile.getInputStream();
             List<List<String>> bankStatementTable;
 
-            switch (multipartFile.getContentType()){
+            switch (Objects.requireNonNull(multipartFile.getContentType())){
                 case "application/pdf":
                     bankStatementTable = ParseBankStatement.parsePDFFormat(initialStream,multipartFile.getOriginalFilename());
                     ConstructorBankStatement constructor = new ConstructorBankStatement();
                     List<Transaction> transactions = constructor.setDataInRepository(bankStatementTable,account);
                     repositoryTransactions.saveAll(transactions);
 
-                    //ParseBankStatement.print(initialStream,multipartFile.getOriginalFilename());
+                    /*
+                    ParseBankStatement.print(initialStream,multipartFile.getOriginalFilename());
+
+                     */
                     break;
                 case "application/vnd.ms-excel":
                     ParseBankStatement.parseExelFormat(initialStream,multipartFile.getOriginalFilename());
