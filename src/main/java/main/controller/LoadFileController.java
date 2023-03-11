@@ -42,15 +42,13 @@ public class LoadFileController {
 
             switch (Objects.requireNonNull(multipartFile.getContentType())){
                 case "application/pdf":
+                    /*
                     bankStatementTable = ParseBankStatement.parsePDFFormat(initialStream,multipartFile.getOriginalFilename());
                     ConstructorBankStatement constructor = new ConstructorBankStatement();
                     List<Transaction> transactions = constructor.setDataInRepository(bankStatementTable,account);
                     repositoryTransactions.saveAll(transactions);
-
-                    /*
-                    ParseBankStatement.print(initialStream,multipartFile.getOriginalFilename());
-
                      */
+                    ParseBankStatement.print(initialStream,multipartFile.getOriginalFilename());
                     break;
                 case "application/vnd.ms-excel":
                     ParseBankStatement.parseExelFormat(initialStream,multipartFile.getOriginalFilename());

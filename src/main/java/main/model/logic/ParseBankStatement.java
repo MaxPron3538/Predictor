@@ -27,25 +27,23 @@ public class ParseBankStatement {
         OutputStream outputStream = new FileOutputStream(contentFile.getAbsolutePath());
         outputStream.write(inputStream.readAllBytes());
         FileInputStream fis = new FileInputStream(contentFile);
+        String regex = "(\\d{2}\\.){2}\\d{4}\\s\\d{2}\\:\\d{2}\\:\\d{2}";
+        Pattern pattern = Pattern.compile(regex);
 
         XSSFWorkbook workbook = new XSSFWorkbook(fis);
         XSSFSheet sheet = workbook.getSheetAt(0);
 
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext())
-        {
-            Row row = rowIterator.next();
+        for (Row row : sheet) {
             Iterator<Cell> cellIterator = row.cellIterator();
 
-            while (cellIterator.hasNext())
-            {
+            while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
-                switch (cell.getCellType())
-                {
+                switch (cell.getCellType()) {
                     case NUMERIC:
                         System.out.print(cell.getNumericCellValue() + "\t");
                         break;
                     case STRING:
+                        Matcher matcher = pattern.matcher(cell.getStringCellValue());
                         System.out.print(cell.getStringCellValue() + "\t");
                         break;
                 }
