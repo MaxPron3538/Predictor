@@ -38,23 +38,28 @@ public class LoadFileController {
     public String uploadFileAndSave(@RequestParam("file") MultipartFile multipartFile,@ModelAttribute Account account) throws IOException {
         try{
             InputStream initialStream = multipartFile.getInputStream();
+            ConstructorBankStatement constructor = new ConstructorBankStatement();
             List<List<String>> bankStatementTable;
+            List<Transaction> transactions;
 
             switch (Objects.requireNonNull(multipartFile.getContentType())){
                 case "application/pdf":
-                    /*
+
                     bankStatementTable = ParseBankStatement.parsePDFFormat(initialStream,multipartFile.getOriginalFilename());
-                    ConstructorBankStatement constructor = new ConstructorBankStatement();
-                    List<Transaction> transactions = constructor.setDataInRepository(bankStatementTable,account);
+                    transactions = constructor.setDataFromPDFInRepository(bankStatementTable,account);
                     repositoryTransactions.saveAll(transactions);
-                     */
-                    ParseBankStatement.print(initialStream,multipartFile.getOriginalFilename());
                     break;
                 case "application/vnd.ms-excel":
-                    ParseBankStatement.parseExelFormat(initialStream,multipartFile.getOriginalFilename());
+                    bankStatementTable = ParseBankStatement.parseExelFormat(initialStream,multipartFile.getOriginalFilename())
+                            .stream().filter(s -> s.size() != 0).collect(Collectors.toList());
+
+                    transactions = constructor.setDataFromXLSInRepository(bankStatementTable,account);
+                    repositoryTransactions.saveAll(transactions);
                     break;
                 case "text/csv":
                     bankStatementTable = ParseBankStatement.parseCSVFormat(initialStream);
+                    transactions = constructor.setDataFromXLSInRepository(bankStatementTable,account);
+                    repositoryTransactions.saveAll(transactions);
             }
         }catch (IOException ex){
             ex.printStackTrace();

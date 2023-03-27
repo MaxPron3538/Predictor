@@ -93,12 +93,13 @@ function moveMarginTop(message){
 }
 
 function moveMarginBottom(message){
-    if(marginCountBottom < 220){
+    if(marginCountBottom < 380){
         button = document.getElementById(message);
         button.style.marginTop = marginCountBottom+"px";
         marginCountBottom+=20;
     }
 }
+
 
 function moveMarginBottomForGetOrDelete(message){
     if(GetDeleteMarginCountBottom < 120){
@@ -158,25 +159,25 @@ function displayFormAdd(){
     }
     if(marginCountBottom != -20){
         if(pointer == 0){
-            marginCountBottom = 220;
+            marginCountBottom = 380;
             clearInterval(firstInterval);
 
             if(condition == false){
-               countBottomAU = -220;
+               countBottomAU = -380;
                firstInterval = setInterval(moveMarginTop,10,'get');
                stopInterval = setInterval(moveBottomButtonAU,10,'update',true,0);
             }else{
                firstInterval = setInterval(moveMarginTop,10,'update');
             }
-            setTimeout(setHiddenForm1,120);
+            setTimeout(setHiddenForm1,100);
         }
         else if(condition == true){
-           countBottomAU = -220;
+           countBottomAU = -380;
            stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
         }
         else{
            countBottomAU = 0;
-           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,220);
+           stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,380);
         }
     }else{
         condition = true;
@@ -197,7 +198,7 @@ function displayFormUpdateId(){
         clearInterval(secondInterval);
 
         if(conditionGetOrDelete == true){
-            if(countTopGD == -120){
+            if(countTopGD == - 120){
                 countBottomGD = -120;
                 stopInterval = setInterval(moveBottomButtonGD,10,'delete',conditionGetOrDelete,0);
             }
@@ -212,24 +213,24 @@ function displayFormUpdateId(){
     }
     if(marginCountBottom != -20){
         if(pointer == 1){
-            marginCountBottom = 220;
+            marginCountBottom = 380;
             clearInterval(firstInterval);
 
             if(condition == true){
-               countBottomAU = -220;
+               countBottomAU = -380;
                firstInterval = setInterval(moveMarginTop,10,'update');
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }else{
                firstInterval = setInterval(moveMarginTop,10,'get');
             }
-            setTimeout(setHiddenForm2,120);
+            setTimeout(setHiddenForm2,100);
         }
         else if(condition == true){
             countTopAU = 0;
-            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,-220);
+            stopInterval = setInterval(moveTopButtonAU,10,'update',condition,-380);
         }
         else{
-            countTopAU = 220;
+            countTopAU = 380;
             stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
         }
     }
@@ -252,14 +253,14 @@ function displayFormGetId(){
         clearInterval(firstInterval);
 
         if(condition == true){
-            if(countTopAU == -220){
-               countBottomAU = -220;
+            if(countTopAU == -380){
+               countBottomAU = -380;
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'update');
         }else{
-            if(countBottomAU == 220){
-               countTopAU = 220;
+            if(countBottomAU == 380){
+               countTopAU = 380;
                stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'get');
@@ -277,7 +278,7 @@ function displayFormGetId(){
             }else{
                secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'delete');
             }
-            setTimeout(setHiddenGetId,120);
+            setTimeout(setHiddenGetId,100);
         }
         else if(conditionGetOrDelete == true){
            countBottomGD = -120;
@@ -307,13 +308,13 @@ function displayFormDeleteId(){
         clearInterval(firstInterval);
 
         if(condition == true){
-            if(countTopAU == -220){
-               countBottomAU = -220;
+            if(countTopAU == -380){
+               countBottomAU = -380;
                stopInterval = setInterval(moveBottomButtonAU,10,'update',condition,0);
             }
             firstInterval = setInterval(moveMarginTop,10,'update');
         }else{
-            if(countBottomAU == 220){
+            if(countBottomAU == 380){
                countTopAU = 120;
                stopInterval = setInterval(moveTopButtonAU,10,'update',condition,0);
             }
@@ -332,7 +333,7 @@ function displayFormDeleteId(){
             }else{
                secondInterval = setInterval(moveMarginTopForGetOrDelete,10,'getAll');
             }
-            setTimeout(setHiddenDeleteId,120);
+            setTimeout(setHiddenDeleteId,100);
         }
         else if(conditionGetOrDelete == true){
            countTopGD = 0;
@@ -350,18 +351,228 @@ function displayFormDeleteId(){
     pointer = 3;
 }
 
+function addAndHide(){
+    if(count % 2 != 0){
+        doSelect();
+        setTimeout(displayFormAdd,200);
+    }else{
+        displayFormAdd();
+    }
+
+}
+
+function updateAndHide(){
+    if(count % 2 != 0){
+        doSelect();
+        setTimeout(displayFormUpdateId,200);
+    }else{
+        displayFormUpdateId();
+    }
+
+}
+
+function getAndHide(){
+    if(count % 2 != 0){
+        doSelect();
+        setTimeout(displayFormGetId,200);
+    }else{
+        displayFormGetId();
+    }
+
+}
+
+function deleteAndHide(){
+    if(count % 2 != 0){
+        doSelect();
+        setTimeout(displayFormDeleteId,200);
+    }else{
+        displayFormDeleteId();
+    }
+
+}
+
 function displayFormGet(){
 var id = document.getElementById("id-product-get").value;
 document.getElementById("getId").action+=id;
 }
-
 function displayFormDelete(){
 var id = document.getElementById("id-product-delete").value;
 document.getElementById("deleteId").action+=id;
 }
 
-function displayFormUpdate(){
-var id = document.getElementById("id-product-update").value;
-document.getElementById("form2").action+=id;
-alert(document.getElementById("form2").action);
+
+var opacity = 1;
+var interval;
+var count = 0;
+
+function lowOpacity()
+{
+    if(opacity >= 0)
+    {
+      document.getElementById("select").style.opacity = opacity-0.1;
+      opacity=opacity-0.1;
+    }else{
+      clearInterval(interval);
+      interval = setInterval(highOpacity,20);
+    }
+}
+
+function highOpacity()
+{
+    if(opacity <= 1)
+    {
+      document.getElementById("select").style.opacity = opacity+0.1
+      opacity=opacity+0.1;
+    }else{
+      clearInterval(interval);
+    }
+}
+
+function doSelect()
+{   interval = setInterval(lowOpacity,10);
+    if(marginCountBottom == -20 && GetDeleteMarginCountBottom == -20){
+        if(count % 2 == 0){
+             intervalButtonLeft = setInterval(moveLeft,10,"predict");
+             intervalButtonFirst = setInterval(moveLeftFirst,10,"predict-for-month");
+             intervalButtonSecond = setInterval(moveLeftSecond,10,"predict-for-two-month");
+             intervalButtonLeft2 = setInterval(moveLeft2,10,"predict-cost");
+           }
+       else{
+             intervalButtonLeft = setInterval(moveRight,10,"predict");
+             intervalButtonFirst = setInterval(moveRightFirst,10,"predict-for-month");
+             intervalButtonSecond = setInterval(moveRightSecond,10,"predict-for-two-month");
+             intervalButtonLeft2 = setInterval(moveRight2,10,"predict-cost");
+             document.getElementById("predict-for-month").style.opacity = 0;
+             document.getElementById("predict-for-two-month").style.opacity = 0;
+           }
+       count++;
+   }
+}
+
+
+var countLeft = 1720;
+var intervalButtonLeft;
+var button;
+var opacityButton = 0;
+
+function moveLeft(message){
+
+   if(countLeft >= 1660){
+     button = document.getElementById(message);
+     button.style.left = countLeft+"px";
+     button.style.opacity = opacityButton;
+     opacityButton+=1;
+     countLeft-=20;
+   }
+   else{
+     clearInterval(intervalButtonLeft);
+   }
+}
+
+var countLeft2 = 1720;
+var intervalButtonLeft2;
+var button2;
+var opacityButton2 = 0;
+
+function moveLeft2(message){
+
+   if(countLeft2 >= 1660){
+     button2 = document.getElementById(message);
+     button2.style.left = countLeft2+"px";
+     button2.style.opacity = opacityButton2;
+     opacityButton2+=1;
+     countLeft2-=20;
+   }
+   else{
+     clearInterval(intervalButtonLeft2);
+   }
+}
+
+function moveRight(message){
+
+   if(countLeft <= 1720){
+     button = document.getElementById(message);
+     button.style.left = countLeft+"px";
+     button.style.opacity = opacityButton;
+     opacityButton=0;
+     countLeft+=20;
+   }
+   else{
+     clearInterval(intervalButtonLeft);
+   }
+}
+
+function moveRight2(message){
+
+   if(countLeft2 <= 1720){
+     button2 = document.getElementById(message);
+     button2.style.left = countLeft2+"px";
+     button2.style.opacity = opacityButton2;
+     opacityButton2=0;
+     countLeft2+=20;
+   }
+   else{
+     clearInterval(intervalButtonLeft2);
+   }
+}
+
+var countLeftFirst = 1730;
+var intervalButtonFirst;
+var buttonFirst;
+var opacityButtonFirst = 0;
+
+function moveLeftFirst(message){
+
+   if(countLeftFirst >= 1680){
+     buttonFirst = document.getElementById(message);
+     buttonFirst.style.left = countLeftFirst+"px";
+     countLeftFirst-=10;
+   }
+   else{
+     clearInterval(intervalButtonFirst);
+   }
+}
+
+function moveRightFirst(message){
+
+   if(countLeftFirst <= 1730){
+     buttonFirst = document.getElementById(message);
+     buttonFirst.style.left = countLeftFirst+"px";
+     countLeftFirst+=20;
+   }
+   else{
+     clearInterval(intervalButtonFirst);
+   }
+}
+
+var countLeftSecond = 1730;
+var intervalButtonSecond;
+var buttonSecond;
+
+function moveLeftSecond(message){
+
+   if(countLeftSecond >= 1680){
+     buttonSecond = document.getElementById(message);
+     buttonSecond.style.left = countLeftSecond+"px";
+     countLeftSecond-=10;
+   }
+   else{
+     clearInterval(intervalButtonSecond);
+   }
+}
+
+function moveRightSecond(message){
+   if(countLeftSecond <= 1730){
+     buttonSecond = document.getElementById(message);
+     buttonSecond.style.left = countLeftSecond+"px";
+     countLeftSecond+=20;
+   }
+   else{
+     clearInterval(intervalButtonSecond);
+   }
+}
+
+function selectPredictor(){
+    document.getElementById("predict-for-month").style.opacity = 1;
+    document.getElementById("predict-for-two-month").style.opacity = 1;
 }

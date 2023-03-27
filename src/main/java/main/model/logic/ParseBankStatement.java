@@ -22,36 +22,90 @@ public class ParseBankStatement {
     private static String expForEngLangEnd = "Deputy Chairman of the Board";
 
 
-    public static double[][] parseExelFormat(InputStream inputStream,String fileName) throws IOException{
+    public static List<List<String>> parseExelFormat(InputStream inputStream,String fileName) throws IOException{
         File contentFile = new File("BankStatements" + fileName);
         OutputStream outputStream = new FileOutputStream(contentFile.getAbsolutePath());
         outputStream.write(inputStream.readAllBytes());
         FileInputStream fis = new FileInputStream(contentFile);
-        String regex = "(\\d{2}\\.){2}\\d{4}\\s\\d{2}\\:\\d{2}\\:\\d{2}";
-        Pattern pattern = Pattern.compile(regex);
+        List<List<String>> bankStatement = new ArrayList<>();
+        String regexForDate = "(\\d{2}\\.){2}\\d{4}\\s(\\d{2}\\:){2}\\d{2}";
+        String regexForDescription = "\\D+[^UAH]";
+        String regexForMCC = "\\d{4}";
+        String regexForNumber = "\\d+";
+        String regexForCurrency = "UAH";
+        String regexForCommission = "—";
+
+        Pattern patternForDate = Pattern.compile(regexForDate);
+        Pattern patternForDescription = Pattern.compile(regexForDescription);
+        Pattern patternForMCC = Pattern.compile(regexForMCC);
+        Pattern patternForNumber = Pattern.compile(regexForNumber);
+        Pattern patternForCurrency = Pattern.compile(regexForCurrency);
+        Pattern patternForCommission = Pattern.compile(regexForCommission);
+        Matcher matcher;
 
         XSSFWorkbook workbook = new XSSFWorkbook(fis);
         XSSFSheet sheet = workbook.getSheetAt(0);
+        int position = -1;
+        int index = 0;
 
         for (Row row : sheet) {
             Iterator<Cell> cellIterator = row.cellIterator();
+            List<String> transaction = new LinkedList<>();
 
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
+
                 switch (cell.getCellType()) {
                     case NUMERIC:
-                        System.out.print(cell.getNumericCellValue() + "\t");
+                        matcher = patternForNumber.matcher(String.valueOf(cell.getNumericCellValue()));
+                        if(matcher.find() && index == position) {
+                            transaction.add(String.valueOf(cell.getNumericCellValue()));
+                            break;
+                        }
                         break;
                     case STRING:
-                        Matcher matcher = pattern.matcher(cell.getStringCellValue());
-                        System.out.print(cell.getStringCellValue() + "\t");
+                        matcher = patternForDate.matcher(cell.getStringCellValue());
+                        if(matcher.find()) {
+                            position = index;
+                            List<String> dataTime = Arrays.asList(cell.getStringCellValue().split("\\s"));
+                            transaction.addAll(dataTime);
+                            break;
+                        }
+                        matcher = patternForDescription.matcher(cell.getStringCellValue());
+                        if(matcher.find() && index == position){
+                            transaction.add(cell.getStringCellValue());
+                            break;
+                        }
+                        matcher = patternForMCC.matcher(String.valueOf(cell.getStringCellValue()));
+                        if(matcher.find() && index == position) {
+                            transaction.add(cell.getStringCellValue());
+                            break;
+                        }
+                        matcher = patternForCurrency.matcher(cell.getStringCellValue());
+                        if(matcher.find() && index == position){
+                            transaction.add(cell.getStringCellValue());
+                            break;
+                        }
+                        matcher = patternForCommission.matcher(cell.getStringCellValue());
+                        if(matcher.find() && index == position) {
+                            transaction.add(cell.getStringCellValue());
+                            break;
+                        }
                         break;
                 }
             }
-            System.out.println("");
+            bankStatement.add(transaction);
+            index++;
+        }
+        outputStream.close();
+        workbook.close();
+        fis.close();
+
+        if(contentFile.delete()){
+            System.out.println("File "+fileName +" deleted!");
         }
 
-        return null;
+        return bankStatement;
     }
 
     public static String toDeterminateLangForStart(PDFTextStripper stripper,PDDocument document) throws IOException {
@@ -164,7 +218,7 @@ public class ParseBankStatement {
     }
 
     public static void print(InputStream inputStream,String filename) throws IOException {
-        List<List<String>> bankStatement = ParseBankStatement.parsePDFFormat(inputStream,filename);
+        List<List<String>> bankStatement = ParseBankStatement.parseExelFormat(inputStream,filename).stream().filter(s -> s.size() != 0).collect(Collectors.toList());
 
         for(List<String> transaction : bankStatement){
             for(String elOfTr : transaction){
@@ -176,8 +230,21 @@ public class ParseBankStatement {
 
     public static List<List<String>> parseCSVFormat(InputStream inputStream) throws UnsupportedEncodingException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-        List<String> bankStatement = bufferedReader.lines().collect(Collectors.toList());
-        bankStatement.forEach(System.out::println);
-        return null;
+        List<String> transactions = bufferedReader.lines().collect(Collectors.toList());
+        transactions = transactions.subList(1,transactions.size());
+        List<List<String>> bankStatement = new ArrayList<>();
+
+
+        for(String tr : transactions){
+            List<String> partsTr = Arrays.stream(tr.split(","))
+                    .map(s -> s.replaceAll("\\\"","")).collect(Collectors.toList());
+
+            String []dateAndTime = partsTr.get(0).split("\\s");
+            partsTr = partsTr.subList(1,partsTr.size());
+            partsTr.add(0,dateAndTime[0]);
+            partsTr.add(1,dateAndTime[1]);
+            bankStatement.add(partsTr);
+        }
+        return bankStatement;
     }
 }

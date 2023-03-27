@@ -22,7 +22,7 @@ public class Transaction {
     private double amount;
     private String currency;
     private String commission;
-    private double cashBack;
+    private String cashBack;
     private double balance;
 
     @ManyToOne
@@ -69,11 +69,11 @@ public class Transaction {
         this.balance = balance;
     }
 
-    public double getCashBack() {
+    public String getCashBack() {
         return cashBack;
     }
 
-    public void setCashBack(double cashBack) {
+    public void setCashBack(String cashBack) {
         this.cashBack = cashBack;
     }
 

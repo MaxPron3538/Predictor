@@ -12,71 +12,97 @@
     <h1 text align="center" style="font-family: math;">PREDICTOR</h1>
     <h3 text align="center" style="margin-top: -30px; font-family: system-ui;">Simplify your home bookkeeping</h3>
     <div style="width: 100%; height: 5px; position: relative; top: -18px; background-color: #4CAF50;"></div>
-    <button id="select" onclick="doHello()"></button>
+    <button id="select" onclick="doSelect()"></button>
 </div>
 <p>
 <div>
-    <table id="list-products" style="width: 55%; height: 60px; border-color: steelBlue; background-color: LightSteelBlue; border-radius: 5px;" align="center" border="2">
-        <tr>
+    <table id="list-products" style="width: 65%; height: 60px; border-color: steelBlue; background-color: OliveDrab; border-radius: 5px;" align="center" border="2">
+        <tr style="background-color: DarkSeaGreen;">
             <th>Id</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Category</th>
+            <th>Date</th>
+            <th>Time</th>
             <th>Description</th>
+            <th>MCC</th>
+            <th>Operation amount</th>
+            <th>Operation currency</th>
+            <th>Commission</th>
+            <th>Cashback</th>
+            <th>Balance</th>
         </tr>
-        <tr th:each="transaction : ${transactions}">
+        <tr align="center" style="background-color: LightSteelBlue;" th:each="transaction : ${transactions}">
             <td th:text="${transaction.productId}"></td>
-            <td th:text="${transaction.productName}"></td>
-            <td th:text="${transaction.price}"></td>
-            <td th:text="${transaction.category}"></td>
+            <td th:text="${transaction.date}"></td>
+            <td th:text="${transaction.time}"></td>
             <td th:text="${transaction.description}"></td>
+            <td th:text="${transaction.mcc}"></td>
+            <td th:text="${transaction.amount}"></td>
+            <td th:text="${transaction.currency}"></td>
+            <td th:text="${transaction.commission}"></td>
+            <td th:text="${transaction.cashBack}"></td>
+            <td th:text="${transaction.balance}"></td>
         </tr>
     </table>
     <div align="center">
-        <p><button id="add" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormAdd()">Add product</button>
-        <p><button id="update" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormUpdateId()">Update product</button>
-        <p><button id="get" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormGetId()">Get product</button>
-        <p><button id="delete" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" onclick="displayFormDeleteId()">Delete product</button>
+        <p><button id="add" class="button button1" style="position: relative; width: 65%; height: 10%; color: white;" onclick="addAndHide()">Add product</button>
+        <p><button id="update" class="button button1" style="position: relative; width: 65%; height: 10%; color: white;" onclick="updateAndHide()">Update product</button>
+        <p><button id="get" class="button button1" style="position: relative; width: 65%; height: 10%; color: white;" onclick="getAndHide()">Get product</button>
+        <p><button id="delete" class="button button1" style="position: relative; width: 65%; height: 10%; color: white;" onclick="deleteAndHide()">Delete product</button>
         <p><form action="http://localhost:8080/transactions/" method="get">
-        <input id="getAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Get All products">
+        <input id="getAll" class="button button1" style="position: relative; width: 65%; height: 10%; color: white;" type="submit" value="Get All products">
     </form>
         <p><form action="http://localhost:8080/transactions/" method="post">
         <input type="hidden" name="_method" value="delete"/>
-        <input id="deleteAll" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Delete All products">
+        <input id="deleteAll" class="button button1" style="position: relative; width: 65%; height: 10%; color: white;" type="submit" value="Delete All products">
     </form>
         <p><form action="http://localhost:8080/uploadFile" method="get">
-        <input id="uploadStatement" class="button button1" style="position: relative; width: 55%; height: 10%; color: white;" type="submit" value="Upload bank statement">
+        <input id="uploadStatement" class="button button1" style="position: relative; width: 65%; height: 10%; color: white;" type="submit" value="Upload bank statement">
     </form>
     </div>
     <div align="center">
-        <form id ="form1" style="visibility: hidden; margin-top: -650px;" method="post" action="http://localhost:8080/transactions/">
-            <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="productName" id="name-product-add" placeholder="Name">
-            <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Price" id="price-product-add" placeholder="Price">
-            <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Category" id="category-product-add" placeholder="Category">
-            <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="Description" id="description-product-add" placeholder="Description">
-            <p><input style="position: relative; top: -60px" class="input1" type="submit" value="Send" />
+        <form id ="form1" style="visibility: hidden; margin-top: -810px;" method="post" action="http://localhost:8077/transactions/">
+            <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Date" id="date-product-add" placeholder="Date">
+            <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Time" id="time-product-add" placeholder="Time">
+            <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Description" id="description-product-add" placeholder="Description">
+            <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="MCC" id="mcc-product-add" placeholder="MCC">
+            <p><input style="position: relative; top: -60px" class="text-field__input" type="text" name="Operation ammount" id="ammount-product-add" placeholder="Ammount">
+            <p><input style="position: relative; top: -75px" class="text-field__input" type="text" name="Operation currency" id="currency-product-add" placeholder="Currency">
+            <p><input style="position: relative; top: -90px" class="text-field__input" type="text" name="Commission" id="commision-product-add" placeholder="Commission">
+            <p><input style="position: relative; top: -105px" class="text-field__input" type="text" name="Cashback" id="cashback-product-add" placeholder="Cashback">
+            <p><input style="position: relative; top: -120px" class="text-field__input" type="text" name="Balance" id="balance-product-add" placeholder="Balance">
+            <p><input style="position: relative; top: -135px" class="input1" type="submit" value="Send" />
         </form>
 
-        <form id ="form2" style="visibility: hidden; margin-top: -170px;" method="post" action="http://localhost:8080/transactions/">
+        <form id ="form2" style="visibility: hidden; margin-top: -400px;" method="post" action="http://localhost:8080/transactions/">
             <input type="hidden" name="_method" value="put"/>
-            <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="productId" id="id-product-update" placeholder="Id">
-            <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="productName" id="name-product-update" placeholder="Name">
-            <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Price" id="price-product-update" placeholder="Price">
-            <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="Category" id="category-product-update" placeholder="Category">
-            <p><input style="position: relative; top: -60px" class="text-field__input" type="text" name="Description" id="description-product-update" placeholder="Description">
-            <p><input style="position: relative; top: -75px" class="input1" type="submit" onclick="displayFormUpdate()" value="Send" />
+            <p><input style="position: relative; top: 0px" class="text-field__input" type="text" name="Id" id="id-product-add" placeholder="Id">
+            <p><input style="position: relative; top: -15px" class="text-field__input" type="text" name="Date" id="date-product-update" placeholder="Date">
+            <p><input style="position: relative; top: -30px" class="text-field__input" type="text" name="Time" id="time-product-update" placeholder="Time">
+            <p><input style="position: relative; top: -45px" class="text-field__input" type="text" name="Description" id="description-product-update" placeholder="Description">
+            <p><input style="position: relative; top: -60px" class="text-field__input" type="text" name="MCC" id="mcc-product-update" placeholder="MCC">
+            <p><input style="position: relative; top: -75px" class="text-field__input" type="text" name="Operation ammount" id="ammount-product-update" placeholder="Ammount">
+            <p><input style="position: relative; top: -90px" class="text-field__input" type="text" name="Operation currency" id="currency-product-update" placeholder="Currency">
+            <p><input style="position: relative; top: -105px" class="text-field__input" type="text" name="Commission" id="commision-product-update" placeholder="Commission">
+            <p><input style="position: relative; top: -120px" class="text-field__input" type="text" name="Cashback" id="cashback-product-update" placeholder="Cashback">
+            <p><input style="position: relative; top: -135px" class="text-field__input" type="text" name="Balance" id="balance-product-update" placeholder="Balance">
+            <p><input style="position: relative; top: -150px" class="input1" type="submit" value="Send" />
         </form>
 
-        <form id ="getId" style="visibility: hidden; margin-top: -90px;" method="get" action="http://localhost:8080/transactions/">
-            <input class="text-field__input" type="text" name="productId" id="id-product-get" placeholder="Id">
+        <form id ="getId" style="visibility: hidden; margin-top: -160px;" method="get" action="http://localhost:8080/transactions/">
+            <input class="text-field__input" type="text" name="transactionId" id="id-transaction-get" placeholder="Id">
             <p><input id="submit-get-id" class="input1" onclick="displayFormGet()" type="submit" value="Send"></p>
         </form>
 
-        <form id ="deleteId" style="visibility: hidden; margin-top: -15px;" method="post" action="http://localhost:8080/transactions/">
+        <form id ="deleteId" style="visibility: hidden; margin-top: -20px;" method="post" action="http://localhost:8080/transactions/">
             <input type="hidden" name="_method" value="delete"/>
-            <input class="text-field__input" type="text" name="productId" id="id-product-delete" placeholder="Id">
+            <input class="text-field__input" type="text" name="transactionId" id="id-transaction-delete" placeholder="Id">
             <p><input id="submit-delete-name" class="input1" onclick="displayFormDelete()" type="submit" value="Send"></p>
         </form>
+    </div>
+    <div id="selectButtons">
+        <button id="predict" class="buttonSelect buttonSelect1" onclick="selectPredictor()" style="position: relative; top: -370px; left: 1720px; width: 10%; height: 5%; color: white; opacity: 0;">Predict the balance</button>
+        <p><button id="predict-for-month" class="buttonSelect buttonSubSelect" style="position: relative; top: -385px; left: 1730px; width: 8%; height: 5%; color: white; opacity: 0;">for a month</button>
+        <p><button id="predict-for-two-month" class="buttonSelect buttonSubSelect" style="position: relative; top: -400px; left: 1730px; width: 8%; height: 5%; color: white; opacity: 0;">for a two months</button>
+        <p><button id="predict-cost" class="buttonSelect buttonSelect1" onclick="selectPredictor()" style="position: relative; top: -410px; left: 1720px; width: 10%; height: 5%; color: white;; opacity:0;">Predict price of service</button>
     </div>
 </div>
 </body>
@@ -87,11 +113,5 @@ function displayFormUpdate()
    document.getElementById("form2").action+=id;
 }
 
-/*
-function doHello()
-{
-   document.getElementById("select").style.width = 100 + "px";
-}
-*/
 </script>
 </html>
