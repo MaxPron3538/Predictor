@@ -45,100 +45,16 @@
     cursor: pointer;
 }
 
-.buttonSelect {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 8px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-
-.buttonSelect1 {
-    background-color: lightsteelblue;
-    color: black;
-    border: 2px solid lightsteelblue;
-    border-radius: 10px;
-}
-
-.buttonSubSelect {
-    background-color: #4CAF50;
-    padding: 4px 4px;
-    color: black;
-    border: 2px solid lightsteelblue;
-    border-radius: 10px;
-}
-
-.buttonSelect:hover {
-    background-color: #A52A2A;
-    color: white;
-}
-
 .button1 {
-    background-color: transparent;
+    background-color: #4CAF50;
     color: black;
     border: 2px solid #B0C4DE;
     border-radius: 10px;
 }
 
 .button1:hover {
-    background-color: #4CAF50;
+    background-color: #006400;
     color: white;
-}
-
-.button2 {
-    background-color: transparent;
-    color: black;
-    border: 2px solid #008CBA;
-}
-
-.button2:hover {
-    background-color: #008CBA;
-    color: white;
-}
-
-.button3 {
-    background-color: transparent;
-    color: black;
-    border: 2px solid #f44336;
-}
-
-.button3:hover {
-    background-color: #f44336;
-    color: white;
-}
-
-.button4 {
-    background-color: transparent;
-    color: black;
-    border: 2px solid #e7e7e7;
-}
-
-.button4:hover {background-color: #e7e7e7;}
-
-.button5 {
-    background-color: transparent;
-    color: black;
-    border: 2px solid #555555;
-}
-
-.button5:hover {
-    background-color: #555555;
-    color: white;
-}
-#select{
-    width: 40px;
-    height: 40px;
-    border: 0;
-    background-image: url(https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/254000/163-512.png);
-    background-size : cover;
-    border-radius: 30px;
 }
 
 @media (min-width: 1200px) {
@@ -148,7 +64,6 @@
       -webkit-background-size: 100%;
       -o-background-size: 100%;
       background-size: cover;
-      background-attachment: fixed;
       margin: 0;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
       font-size: 1rem;
@@ -158,12 +73,6 @@
       background-color: #fff;
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
-    #select{
-        position: relative;
-        left: 97.5%;
-        top: -75px
-
     }
 }
 
@@ -185,27 +94,22 @@
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
-    #select{
-       position: relative;
-       left: 92%;
-       top: -75px
-    }
 }
 
-.dotBlue {
-  height: 25px;
-  width: 25px;
-  background-color: RoyalBlue;
-  border-radius: 50%;
-  border: 2px solid lightsteelblue;
-  display: inline-block;
+.square {
+  position: relative;
+  margin-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 450px;
+  width: 400px;
+  background-color: lightsteelblue;
+  border-radius: 50px;
+  border: solid 4px;
+  border-color: #4CAF50;
+  opacity: 0.6;
 }
 
-.dotRed {
-  height: 25px;
-  width: 25px;
-  background-color: FireBrick;
-  border-radius: 50%;
-  border: 2px solid lightsteelblue;
-  display: inline-block;
+.form1{
+    margin-top: 100px;
 }

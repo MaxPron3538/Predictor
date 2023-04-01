@@ -44,7 +44,6 @@ public class LoadFileController {
 
             switch (Objects.requireNonNull(multipartFile.getContentType())){
                 case "application/pdf":
-
                     bankStatementTable = ParseBankStatement.parsePDFFormat(initialStream,multipartFile.getOriginalFilename());
                     transactions = constructor.setDataFromPDFInRepository(bankStatementTable,account);
                     repositoryTransactions.saveAll(transactions);

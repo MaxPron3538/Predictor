@@ -1,0 +1,98 @@
+    *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+@media (min-width: 1200px) {
+     body {
+      background: url(https://wallpapers.com/images/hd/5k-firewatch-deer-aesthetic-0bt8rqtpbep0bwl9.jpg) no-repeat;
+      -moz-background-size: 100%;
+      -webkit-background-size: 100%;
+      -o-background-size: 100%;
+      background-size: cover;
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+      background-color: #fff;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+}
+
+
+@media (min-width: 300px) and (max-width: 1000px) {
+    body {
+      background: url(https://wallpapers.com/images/hd/5k-firewatch-deer-aesthetic-0bt8rqtpbep0bwl9.jpg) no-repeat;
+      background-size: cover;
+      background-position: center;
+      min-width: 500px;
+      min-height: 800px;
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+      background-color: #fff;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+}
+
+.square {
+  position: relative;
+  margin-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 430px;
+  width: 400px;
+  background-color: lightsteelblue;
+  border-radius: 50px;
+  border: solid 4px;
+  border-color: #4CAF50;
+  opacity: 0.7;
+}
+
+.uploadbanner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+input[type="file"] {
+    position: absolute;
+    z-index: -1;
+    top: 20px;
+    left: 30px;
+    font-size: 17px;
+    display: none;
+}
+
+.button-wrap {
+    position: relative;
+}
+
+.button-upload {
+    display: inline-block;
+    background-color: #4CAF50;
+    border-radius: 10px;
+    border: 4px double #cccccc;
+    color: #ffffff;
+    text-align: center;
+    font-size: 20px;
+    padding: 8px;
+    width: 250px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-left: 48%;
+}
+
+.button-upload:hover {
+    background-color: #006400;
+}

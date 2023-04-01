@@ -191,7 +191,7 @@ public class ParseBankStatement {
 
                 if(lastElemTr.size()> 3){
                     balance = lastElemTr.subList(2,lastElemTr.size()).stream().collect(Collectors.joining());
-                    lastElemTr.subList(2,lastElemTr.size()-1).clear();
+                    lastElemTr.subList(1,lastElemTr.size()-1).clear();
                 }
                 readyToSaveTransaction.add(transaction.get(0).trim());
                 readyToSaveTransaction.add(transaction.get(1).trim());
@@ -218,7 +218,7 @@ public class ParseBankStatement {
     }
 
     public static void print(InputStream inputStream,String filename) throws IOException {
-        List<List<String>> bankStatement = ParseBankStatement.parseExelFormat(inputStream,filename).stream().filter(s -> s.size() != 0).collect(Collectors.toList());
+        List<List<String>> bankStatement = ParseBankStatement.parsePDFFormat(inputStream,filename);
 
         for(List<String> transaction : bankStatement){
             for(String elOfTr : transaction){
@@ -233,7 +233,6 @@ public class ParseBankStatement {
         List<String> transactions = bufferedReader.lines().collect(Collectors.toList());
         transactions = transactions.subList(1,transactions.size());
         List<List<String>> bankStatement = new ArrayList<>();
-
 
         for(String tr : transactions){
             List<String> partsTr = Arrays.stream(tr.split(","))
