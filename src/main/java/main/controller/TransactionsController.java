@@ -29,7 +29,7 @@ public class TransactionsController {
     @Autowired
     private TransactionRepository repositoryTransactions;
 
-    @GetMapping("/transactions/")
+    @GetMapping("/transactions")
     public String list(@ModelAttribute Account account, Model model){
         if(account.getStatusCode() == StatusCode.Ok){
             Account existAccount = repositoryAccounts.findById(account.getId()).get();
@@ -40,7 +40,7 @@ public class TransactionsController {
         return "redirect:/";
     }
 
-    @PostMapping("/transactions/")
+    @PostMapping("/transactions")
     public String add(@ModelAttribute Account account, Transaction transaction, Model model){
         int id = Math.abs(transaction.getDescription().hashCode()*account.getEmail().hashCode());
         transaction.setProductId(id);
@@ -82,7 +82,7 @@ public class TransactionsController {
         return "redirect:/transactions/";
     }
 
-    @DeleteMapping("/transactions/")
+    @DeleteMapping("/transactions")
     public String deleteList(@ModelAttribute Account account){
         List<Transaction> transactionList = repositoryTransactions.findAll().stream().filter(s -> s.getAccount().getId() == account.getId()).collect(Collectors.toList());
         transactionList.forEach(s -> repositoryTransactions.deleteById(s.getProductId()));

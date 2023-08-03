@@ -550,6 +550,7 @@ function moveButtomGraph(){
    setInterval(moveMarginBottomGraph,10,"Graph");
    setTimeout(changeVisibility,100);
    setInterval(showGraph,100);
+   getRequestToPredictedBalance();
 }
 
 function showGraph(){

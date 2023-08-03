@@ -14,7 +14,7 @@
     <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
     <style type="text/css">
        #container1 {
-          width: 750px; height: 500px; position: relative; left: 25px; top: 25px;
+          width: 1000px; height: 600px; position: relative; left: 25px; top: 25px;
        }
        #container2 {
           width: 750px; height: 500px; position: relative; left: 25px; top: 25px;
@@ -118,9 +118,9 @@
         <p><button id="predict-for-two-month" class="buttonSelect buttonSubSelect" style="position: fixed; top: 220px; left: 1700px; width: 8%; height: 5%; color: white; opacity: 0;">for a month</button>
         <p><button id="Clasify-transactions" onclick="moveButtomDiagram()" class="buttonSelect buttonSelect1" style="position: fixed; top: 300px; left: 1720px; width: 10%; height: 5%; color: white; opacity:0;">Classify transactions</button>
     </div>
-    <div id="Graph" style="position: relative; margin-top: -220px; visibility: hidden; opacity: 0;">
-        <div style="background-color: DarkSlateGray; border-radius: 20px; position: relative; left: 550px; top: 20px; width: 800px; height: 550px">
-            <div id="container1"></div>
+    <div id="Graph" align="center" style="position: relative; margin-top: -220px; visibility: hidden; opacity: 0;">
+        <div style="background-color: DarkSlateGray; position:relative; top: 20px; border-radius: 20px; width: 1050px; height: 650px;">
+            <div id="container1" style="position:relative; left: -2px;"></div>
         </div>
     </div>
     <div id="Diagram" style="height: 100px; position: relative; margin-top: -500px;  visibility: hidden; opacity: 0;">
@@ -136,85 +136,6 @@ function displayFormUpdate()
    var id = document.getElementById("id-product-update").value;
    document.getElementById("form2").action+=id;
 }
-
-anychart.onDocumentReady(function () {
-      var dataSet = anychart.data.set(getData());
-      var firstSeriesData = dataSet.mapAs({ x: 0, value: 1 });
-      var secondSeriesData = dataSet.mapAs({ x: 0, value: 2 });
-      var chart = anychart.line();
-
-      chart.animation(true);
-      chart.padding([10, 20, 5, 20]);
-      chart.crosshair().enabled(true).yLabel(false).yStroke(null);
-      chart.tooltip().positionMode('point');
-
-      chart.title(
-        'Forecasted amount on the balance sheet for the period of two future weeks'
-      );
-
-      chart.yAxis().title('Ammount of balance');
-      chart.xAxis().labels().padding(5);
-
-      var firstSeries = chart.line(firstSeriesData);
-      firstSeries.name('Card balance');
-      firstSeries.hovered().markers().enabled(true).type('circle').size(4);
-      firstSeries
-        .tooltip()
-        .position('right')
-        .anchor('left-center')
-        .offsetX(5)
-        .offsetY(5);
-
-      var secondSeries = chart.line(secondSeriesData);
-      secondSeries.name('Projected balance').stroke('FireBrick').size(10);
-      secondSeries.hovered().markers().enabled(true).type('circle').size(4);
-      secondSeries
-        .tooltip()
-        .position('right')
-        .anchor('left-center')
-        .offsetX(5)
-        .offsetY(5);
-
-      chart.legend().enabled(true).fontSize(13).padding([0, 0, 10, 0]);
-
-      chart.container('container1');
-      chart.draw();
-    });
-
-    function getData() {
-      return [
-        ['Jan-2','6020','6002.2458'],
-        ['Jan-3','5998','6005.3351'],
-        ['Jan-4','5977','5971.1979'],
-        ['Jan-7','5907','5907.0136'],
-        ['Jan-10','5837','5819.4014'],
-        ['Jan-15','5688','5714.4205'],
-        ['Jan-19','5538','5597.5701'],
-        ['Jan-21','5480','5473.7892'],
-        ['Jan-22','5423','5347.4567'],
-        ['Jan-23','5412','5222.3914'],
-        ['Jan-24','5400','5101.8522'],
-        ['Jan-26','5200','4988.5377'],
-        ['Jan-27','5000','4884.5866'],
-        ['Feb-6','4814','4791.5772'],
-        ['Feb-8','4628','4710.528'],
-        ['Feb-10','4628','4641.8974'],
-        ['Feb-12','4628','4585.5837'],
-        ['Feb-14','4592','4540.9248'],
-        ['Feb-16','4556','4506.699'],
-        ['Feb-18','4526','4481.1242'],
-        ['Feb-24','4497','4461.8584'],
-        ['Feb-30','4488','4445.9992'],
-        ['Mar-1','4479','4430.0845'],
-        ['Mar-3','4471','4410.0919'],
-        ['Mar-4','4463','4381.4389'],
-        ['Mar-5','4403','4338.983'],
-        ['Mar-6','4343','4277.0215'],
-        ['Mar-12',,'4189.2918'],
-        ['Mar-17',,'4068.9711'],
-        ['Mar-20',,'3908.6764']
-      ];
-    }
 
 anychart.onDocumentReady(function () {
       var chart = anychart.pie([
@@ -246,6 +167,90 @@ anychart.onDocumentReady(function () {
       chart.draw();
     });
 
+    let arr = [];
 
+    async function getRequestToPredictedBalance()
+    {
+        const responseDates = await fetch('http://localhost:8080/transactions/dates/14');
+        const dates = await responseDates.json();
+
+        const responseBalance = await fetch('http://localhost:8080/transactions/oldBalances');
+        const items = await responseBalance.json();
+
+        const responsePredictBalance = await fetch('http://localhost:8080/transactions/predictedBalances/14');
+        const predictItems = await responsePredictBalance.json();
+
+        let columns = 3;
+
+        for (let i = 0; i < predictItems.length; i++)
+        {
+            arr[i] = [];
+            for (let j = 0; j < columns; j++)
+            {
+                if(j == 0)
+                {   if(dates[i] != null){
+                       var str = dates[i].substring(5,10);
+                       var day = str.substring(3,5);
+                       var month = str.substring(0,2);
+                       arr[i][j] = day+'-'+month;
+                    }
+                }
+                if(j == 1)
+                {
+                    arr[i][j] = items[i];
+                }
+                if(j == 2)
+                {
+                    arr[i][j] = predictItems[i];
+                }
+             }
+        }
+
+        anychart.onDocumentReady(function () {
+          var dataSet = anychart.data.set(arr);
+          var firstSeriesData = dataSet.mapAs({ x: 0, value: 1 });
+          var secondSeriesData = dataSet.mapAs({ x: 0, value: 2 });
+          var chart = anychart.line();
+
+          chart.animation(true);
+          chart.padding([10, 20, 5, 20]);
+          chart.crosshair().enabled(true).yLabel(false).yStroke(null);
+          chart.tooltip().positionMode('point');
+
+          chart.title(
+            'Forecasted amount on the balance sheet for the period of two future weeks'
+          );
+
+          chart.yAxis().title('Ammount of balance');
+          chart.xAxis().labels().padding(5);
+
+          var firstSeries = chart.line(firstSeriesData);
+          firstSeries.name('Card balance');
+          firstSeries.hovered().markers().enabled(true).type('circle').size(4);
+          firstSeries
+            .tooltip()
+            .position('right')
+            .anchor('left-center')
+            .offsetX(5)
+            .offsetY(5);
+
+          var secondSeries = chart.line(secondSeriesData);
+          secondSeries.name('Projected balance').stroke('FireBrick').size(10);
+          secondSeries.hovered().markers().enabled(true).type('circle').size(4);
+          secondSeries
+            .tooltip()
+            .position('right')
+            .anchor('left-center')
+            .offsetX(5)
+            .offsetY(5);
+
+          chart.legend().enabled(true).fontSize(13).padding([0, 0, 10, 0]);
+
+          chart.container('container1');
+          chart.draw();
+        });
+
+    }
 </script>
 </html>
+

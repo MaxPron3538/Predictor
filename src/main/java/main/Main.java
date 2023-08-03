@@ -1,5 +1,7 @@
 package main;
 
+import main.model.logic.PredictorCardBalance;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +20,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -29,7 +32,5 @@ public class Main {
         return new HiddenHttpMethodFilter();
     }
 
-    public static void main(String[] args){
-        SpringApplication.run(Main.class,args);
-    }
+    public static void main(String[] args){SpringApplication.run(Main.class,args);}
 }
