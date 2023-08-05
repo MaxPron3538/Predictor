@@ -5,16 +5,11 @@ import main.model.entities.Account;
 import main.model.entities.Transaction;
 import main.model.repositories.AccountRepository;
 import main.model.repositories.TransactionRepository;
-import org.apache.pdfbox.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -26,11 +21,13 @@ public class TransactionsController {
 
     @Autowired
     private AccountRepository repositoryAccounts;
+
     @Autowired
     private TransactionRepository repositoryTransactions;
 
     @GetMapping("/transactions")
     public String list(@ModelAttribute Account account, Model model){
+
         if(account.getStatusCode() == StatusCode.Ok){
             Account existAccount = repositoryAccounts.findById(account.getId()).get();
             List<Transaction> transactions = existAccount.getProductList().stream().sorted(Comparator.comparing(Transaction::getDate)).collect(Collectors.toList());

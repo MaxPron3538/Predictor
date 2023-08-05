@@ -17,7 +17,7 @@
           width: 1000px; height: 600px; position: relative; left: 25px; top: 25px;
        }
        #container2 {
-          width: 750px; height: 500px; position: relative; left: 25px; top: 25px;
+          width: 1000px; height: 600px; position: relative; top: 25px;
        }
     </style>
 </head>
@@ -123,51 +123,71 @@
             <div id="container1" style="position:relative; left: -2px;"></div>
         </div>
     </div>
-    <div id="Diagram" style="height: 100px; position: relative; margin-top: -500px;  visibility: hidden; opacity: 0;">
-        <div style="width:  800px; height: 550px; position: relative; top: 50px; left: 550px; background-color: DarkSlateGray; border-radius: 20px;">
+    <div id="Diagram" align="center" style="position: relative; margin-top: -500px;  visibility: hidden; opacity: 0;">
+        <div style="width:  1050px; height: 650px; position: relative; top: 50px; background-color: DarkSlateGray; border-radius: 20px;">
             <div id="container2"></div>
         </div>
     </div>
 </div>
 </body>
 <script>
-function displayFormUpdate()
-{
-   var id = document.getElementById("id-product-update").value;
-   document.getElementById("form2").action+=id;
-}
+    function displayFormUpdate()
+    {
+       var id = document.getElementById("id-product-update").value;
+       document.getElementById("form2").action+=id;
+    }
 
-anychart.onDocumentReady(function () {
-      var chart = anychart.pie([
-        ['Digital goods', 897],
-        ['Calls', 400],
-        ['Money transfers', 278],
-        ['Supermarkets', 189],
-        ['Fast food', 75],
-        ['Alcoholic drinks', 36]
-      ]);
+    async function getRequestToClassificationTr()
+    {
+        const responseNames = await fetch('http://localhost:8080/transactions/listNames');
+        const nameTransactions = await responseNames.json();
 
-      chart.title('Classification of transactions by category');
-      chart.labels().position('outside');
+        const responseSums = await fetch('http://localhost:8080/transactions/listAmounts');
+        const SumsGroupByMCC = await responseSums.json();
 
-      chart
-        .legend()
-        .title()
-        .enabled(true)
-        .text('Categories')
-        .padding([0, 0, 10, 0]);
+        let arr = [];
+        let columns = 2;
 
-      chart
-        .legend()
-        .position('center-bottom')
-        .itemsLayout('horizontal')
-        .align('center');
+        for (let i = 0; i < nameTransactions.length; i++)
+        {
+             arr[i] = [];
 
-      chart.container('container2');
-      chart.draw();
-    });
+             for (let j = 0; j < columns; j++)
+             {
+                if(j == 0)
+                {
+                      arr[i][j] = nameTransactions[i];
+                }
+                if(j == 1)
+                {
+                    arr[i][j] = SumsGroupByMCC[i];
+                }
+             }
+        }
 
-    let arr = [];
+        anychart.onDocumentReady(function () {
+          var chart = anychart.pie(arr);
+
+          chart.title('Classification of transactions by category');
+          chart.labels().position('outside');
+
+          chart
+            .legend()
+            .title()
+            .enabled(true)
+            .text('Categories')
+            .padding([0, 0, 10, 0]);
+
+          chart
+            .legend()
+            .position('center-bottom')
+            .itemsLayout('horizontal')
+            .align('center');
+
+          chart.container('container2');
+          chart.draw();
+        });
+    }
 
     async function getRequestToPredictedBalance()
     {
@@ -180,6 +200,7 @@ anychart.onDocumentReady(function () {
         const responsePredictBalance = await fetch('http://localhost:8080/transactions/predictedBalances/14');
         const predictItems = await responsePredictBalance.json();
 
+        let arr = [];
         let columns = 3;
 
         for (let i = 0; i < predictItems.length; i++)

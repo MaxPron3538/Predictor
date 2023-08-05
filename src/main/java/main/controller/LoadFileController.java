@@ -26,6 +26,9 @@ public class LoadFileController {
     @Autowired
     private TransactionRepository repositoryTransactions;
 
+    @Autowired
+    private ConstructorBankStatement constructor;
+
     @GetMapping("/uploadFile")
     public String getFormForUploadFile(@ModelAttribute Account account){
         if(account.getStatusCode() == StatusCode.Ok){
@@ -38,7 +41,6 @@ public class LoadFileController {
     public String uploadFileAndSave(@RequestParam("file") MultipartFile multipartFile,@ModelAttribute Account account) throws IOException {
         try{
             InputStream initialStream = multipartFile.getInputStream();
-            ConstructorBankStatement constructor = new ConstructorBankStatement();
             List<List<String>> bankStatementTable;
             List<Transaction> transactions;
 

@@ -2,24 +2,25 @@ package main.controller;
 
 import main.model.StatusCode;
 import main.model.entities.Account;
+import main.model.entities.TypeBusiness;
 import main.model.entities.Transaction;
 import main.model.logic.PredictorCardBalance;
 import main.model.repositories.AccountRepository;
+import main.model.repositories.TransactionSumInterface;
+import main.model.repositories.TypeBusinessRepository;
 import main.model.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/transactions")
 @SessionAttributes("account")
 public class TransactionsRestController {
 
@@ -32,7 +33,10 @@ public class TransactionsRestController {
     @Autowired
     private PredictorCardBalance predictorCardBalance;
 
-    @GetMapping("/transactions/dates/{predictedPeriod}")
+    @Autowired
+    private TypeBusinessRepository typeBusinessRepository;
+
+    @GetMapping("/dates/{predictedPeriod}")
     public ResponseEntity<?> listDates(@ModelAttribute Account account,@PathVariable int predictedPeriod){
         if(account.getStatusCode() == StatusCode.Ok){
             List<LocalDate> listDates = repositoryTransactions.findAll().stream().map(Transaction::getDate).collect(Collectors.toList());
@@ -53,7 +57,7 @@ public class TransactionsRestController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/transactions/oldBalances")
+    @GetMapping("/oldBalances")
     public ResponseEntity<?> listOldBalances(@ModelAttribute Account account){
         if(account.getStatusCode() == StatusCode.Ok){
             List<Double> listBalances = repositoryTransactions.findAll().stream().map(Transaction::getBalance).collect(Collectors.toList());
@@ -66,7 +70,7 @@ public class TransactionsRestController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/transactions/predictedBalances/{predictedPeriod}")
+    @GetMapping("/predictedBalances/{predictedPeriod}")
     public ResponseEntity<?> listProjectedBalances(@ModelAttribute Account account,@PathVariable int predictedPeriod){
         if(account.getStatusCode() == StatusCode.Ok){
             List<Double> listBalances = repositoryTransactions.findAll().stream().map(Transaction::getBalance).collect(Collectors.toList());
@@ -80,6 +84,42 @@ public class TransactionsRestController {
             }
         }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/listNames")
+    public ResponseEntity<?> listNameOfBusinessByMcc(@ModelAttribute Account account){
+        if(account.getStatusCode() == StatusCode.Ok) {
+            List<Integer> listCodeMCC = repositoryTransactions.findAll().stream().map(Transaction::getMcc).distinct().collect(Collectors.toList());
+            List<TransactionSumInterface> sumTransactionsByMCC = repositoryTransactions.findTransactionSumGroupByMCC();
+            List<String> listNamesByMCC = new ArrayList<>();
+
+            for (Integer code : listCodeMCC) {
+                Optional<TypeBusiness> typeBusiness = typeBusinessRepository.findByCode(code);
+                typeBusiness.ifPresent(codeMCC -> listNamesByMCC.add(codeMCC.getName()));
+            }
+
+            if (!listNamesByMCC.isEmpty()) {
+                Collections.reverse(listNamesByMCC);
+                return new ResponseEntity<>(listNamesByMCC,HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @GetMapping("/listAmounts")
+    public ResponseEntity<?> listTotalAmountByMCC(@ModelAttribute Account account){
+        if(account.getStatusCode() == StatusCode.Ok) {
+            List<BigDecimal> listAmount = repositoryTransactions.findTransactionSumGroupByMCC()
+                    .stream().map(TransactionSumInterface::getAmountSum).collect(Collectors.toList());
+
+            if(!listAmount.isEmpty()) {
+                Collections.reverse(listAmount);
+                return new ResponseEntity<>(listAmount,HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     public int calculatePeriod(List<LocalDate> listDates,int predictedPeriod){

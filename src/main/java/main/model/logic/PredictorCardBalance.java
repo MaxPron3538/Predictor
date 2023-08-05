@@ -5,13 +5,14 @@ import main.model.repositories.TransactionRepository;
 import org.apache.poi.util.ArrayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.thymeleaf.util.ArrayUtils;
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class PredictorCardBalance {
 
     private int stepOfFunc = 0;

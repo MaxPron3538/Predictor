@@ -4,6 +4,7 @@ import main.model.entities.Account;
 import main.model.entities.Transaction;
 import main.model.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class ConstructorBankStatement {
 
     @Autowired

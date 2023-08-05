@@ -582,6 +582,7 @@ function moveButtomDiagram(){
    changeVisibilityDiagram();
    setTimeout(changeVisibilityDiagram,600);
    setInterval(showDiagram,50);
+   getRequestToClassificationTr();
 }
 
 function showDiagram(){
