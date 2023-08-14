@@ -178,12 +178,12 @@ public class PredictorCardBalance {
             double[] arrApproximateY = buildOfPolynomial(countOfPoly, sizeOfFunc);
 
             for (int i = 0; i < arrInputY.length-step; i++) {
-                diffInputY += Math.abs(arrInputY[i]-midX);
+                diffInputY += Math.pow(arrInputY[i]-midX,2);
                 postDiff += Math.abs(arrApproximateY[i] - arrInputY[i]);
             }
 
             if (postDiff < preDiff) {
-                if(postDiff < diffInputY){
+                if(postDiff < Math.sqrt(diffInputY)){
                     return countOfPoly;
                 }
                 preDiff = postDiff;
